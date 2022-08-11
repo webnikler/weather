@@ -8,18 +8,20 @@ const Stack = createNativeStackNavigator();
 
 const App = () => {
   return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen
-          name="Home"
-          component={HomeScreen}
-        />
-        <Stack.Screen
-          name="Tommorow"
-          component={TommorowScreen}
-        />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <Api.Provider value={new Api()}>
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen
+            name="Home"
+            component={HomeScreen}
+          />
+          <Stack.Screen
+            name="Tommorow"
+            component={TommorowScreen}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </Api.Provider>
   );
 }
 

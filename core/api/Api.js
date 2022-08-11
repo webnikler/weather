@@ -1,4 +1,5 @@
 import { API_KEY } from '@env'
+import { createContext } from 'react';
 import { WeatherModel } from './model/Weather';
 
 /**
@@ -6,6 +7,16 @@ import { WeatherModel } from './model/Weather';
  * Create instance and use it as singleton
  */
 class Api {
+  /**
+   * Use inside components like this -> 'const api = useContext(Api.Context)'
+   */
+  static Context = createContext(new Api());
+
+  /**
+   * Use inside App.js
+   */
+  static Provider = Api.Context.Provider;
+
   #base = 'https://api.openweathermap.org/data/2.5/forecast';
   #iconsBase = 'http://openweathermap.org/img/wn';
   #apiKey = '';
