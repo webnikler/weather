@@ -1,5 +1,6 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import Api from './core/api/Api';
 import HomeScreen from './screens/HomeScreen';
 import TommorowScreen from './screens/TommorowScreen';
 

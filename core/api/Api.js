@@ -1,4 +1,5 @@
 import { API_KEY } from '@env'
+import { WeatherModel } from './model/Weather';
 
 /**
  * Api service
@@ -6,6 +7,7 @@ import { API_KEY } from '@env'
  */
 class Api {
   #base = 'https://api.openweathermap.org/data/2.5/forecast';
+  #iconsBase = 'http://openweathermap.org/img/wn';
   #apiKey = '';
 
   constructor() {
@@ -31,16 +33,16 @@ class Api {
    */
   #buildURI(base, params = {}) {
     const query = this.#buildQuery(params);
-    return query.length ? `${base}?${qeury}` : base;
+    return query.length ? `${base}?${query}` : base;
   }
 
   /**
    * https://openweathermap.org/current
-   * @return {Promise} Response data
+   * @return {Promise} WeatherModel
    */
-  async getDailyForecast({
-    coordinates: [lat, lon] = [],
-    daysCount: cnt = 7,
+  async getWeather({
+    coordinates: [lat, lon] = [0, 0],
+    daysCount: cnt = 40,
     lang = 'ru',
     units = 'metric',
   }) {
@@ -49,8 +51,13 @@ class Api {
 
     const uri = this.#buildURI(this.#base, params);
     const response = await fetch(uri);
+    const parsedResponse = await response.json();
 
-    return await response.json();
+    return new WeatherModel(parsedResponse);
+  }
+
+  getIconURI(iconId = '') {
+    return `${this.#iconsBase}/${iconId}@2x.png`;
   }
 }
 
