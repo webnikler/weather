@@ -7,6 +7,7 @@ import { WeatherModel } from './model/Weather';
  */
 class Api {
   #base = 'https://api.openweathermap.org/data/2.5/forecast';
+  #iconsBase = 'http://openweathermap.org/img/wn';
   #apiKey = '';
 
   constructor() {
@@ -53,6 +54,10 @@ class Api {
     const parsedResponse = await response.json();
 
     return new WeatherModel(parsedResponse);
+  }
+
+  getIconURI(iconId = '') {
+    return `${this.#iconsBase}/${iconId}@2x.png`;
   }
 }
 
