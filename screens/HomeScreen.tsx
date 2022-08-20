@@ -1,7 +1,6 @@
 import { View, Text, Button } from 'react-native';
-import Icon, { IconName } from '../components/Icon';
 
-const HomeScreen = ({ navigation }) => {
+const HomeScreen = ({ navigation }): JSX.Element => {
   return (
     <View>
       <Text>HomeScreen</Text>
@@ -9,7 +8,6 @@ const HomeScreen = ({ navigation }) => {
         title='Go to Tommorow'
         onPress={() => navigation.navigate('Tommorow')}
       />
-      <Icon name={IconName.cloud} size={40} color='blue'/>
     </View>
   );
 }

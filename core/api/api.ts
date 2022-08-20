@@ -1,5 +1,7 @@
 import { API_KEY } from '@env'
-import { buildUrl } from './utils/buildUrl';
+import { DaysForecastPayload, ForecastPayload } from './types/forecast-payload';
+import { ForecastResponse } from './types/forecast-response';
+import { buildUrl } from './utils/build-url';
 
 const WEATHER_BASE_URL = 'https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/weatherdata';
 const WEATHER_FORECAST_URL = `${WEATHER_BASE_URL}/forecast`;
@@ -10,7 +12,7 @@ export const getForecast = async ({
   forecastDays,
   unitGroup,
   lang,
-}) => {
+}: ForecastPayload): Promise<ForecastResponse> => {
   const contentType = 'json';
   const locationMode = 'single';
   const iconSet = 'icons1';
@@ -30,7 +32,7 @@ export const getForecast = async ({
   return fetch(url).then(res => res.json());
 }
 
-getForecast.forCurrent = async (params) => {
+getForecast.forCurrent = async (params: DaysForecastPayload): Promise<ForecastResponse> => {
   const aggregateHours = 1;
   const forecastDays = 1;
 
@@ -41,7 +43,7 @@ getForecast.forCurrent = async (params) => {
   });
 };
 
-getForecast.for7Days = async (params) => {
+getForecast.for7Days = async (params: DaysForecastPayload): Promise<ForecastResponse> => {
   const aggregateHours = 24;
   const forecastDays = 7;
 
