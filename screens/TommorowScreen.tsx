@@ -1,6 +1,6 @@
 import { View, Text, Button } from 'react-native';
 
-const TommorowScreen = ({ navigation }) => {
+const TommorowScreen = ({ navigation }): JSX.Element => {
   return (
     <View>
       <Text>TommorowScreen</Text>

@@ -5,7 +5,7 @@ import TommorowScreen from './screens/TommorowScreen';
 
 const Stack = createNativeStackNavigator();
 
-const App = () => {
+const App = (): JSX.Element => {
   return (
     <NavigationContainer>
       <Stack.Navigator>
