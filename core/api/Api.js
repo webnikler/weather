@@ -1,75 +1,28 @@
 import { API_KEY } from '@env'
-import { createContext } from 'react';
-import { WeatherModel } from './model/Weather';
+import { buildUrl } from './utils/buildUrl';
 
-/**
- * Api service
- * Create instance and use it as singleton
- */
-class Api {
-  /**
-   * Use inside components like this -> 'const api = useContext(Api.Context)'
-   */
-  static Context = createContext(new Api());
+const WEATHER_FORECAST_BASE_URL = 'https://api.openweathermap.org/data/2.5/forecast';
+const WEATHER_ICONS_BASE_URL = 'http://openweathermap.org/img/wn/';
+const WEATHER_ICONS_SUFFIX = '@2x';
+const WEATHER_ICONS_EXT = '.png';
 
-  /**
-   * Use inside App.js
-   */
-  static Provider = Api.Context.Provider;
+export const get = async ({
+  coordinates: [lat, lon] = [0, 0],
+  daysCount: cnt = 40,
+  lang = 'ru',
+  units = 'metric',
+}) => {
+  const appid = API_KEY;
+  const url = buildUrl(WEATHER_FORECAST_BASE_URL, {
+    lat, lon, cnt, appid, units, lang,
+  });
 
-  #base = 'https://api.openweathermap.org/data/2.5/forecast';
-  #iconsBase = 'http://openweathermap.org/img/wn';
-  #apiKey = '';
-
-  constructor() {
-    this.#apiKey = API_KEY;
-  }
-
-  /**
-   * Build query params string for request
-   * @param {object} params - Query params as object { name: value, ... }
-   * @returns {string}
-   */
-  #buildQuery(params) {
-    return Object.entries(params)
-      .map(([name, value]) => `${name}=${encodeURIComponent(value)}`)
-      .join('&');
-  }
-
-  /**
-   * Build uri string for request
-   * @param {string} base - Base url without query params
-   * @param {object} params - Query params as object { name: value, ... }
-   * @returns {string}
-   */
-  #buildURI(base, params = {}) {
-    const query = this.#buildQuery(params);
-    return query.length ? `${base}?${query}` : base;
-  }
-
-  /**
-   * https://openweathermap.org/current
-   * @return {Promise} WeatherModel
-   */
-  async getWeather({
-    coordinates: [lat, lon] = [0, 0],
-    daysCount: cnt = 40,
-    lang = 'ru',
-    units = 'metric',
-  }) {
-    const appid = this.#apiKey;
-    const params = { lat, lon, cnt, appid, units, lang };
-
-    const uri = this.#buildURI(this.#base, params);
-    const response = await fetch(uri);
-    const parsedResponse = await response.json();
-
-    return new WeatherModel(parsedResponse);
-  }
-
-  getIconURI(iconId = '') {
-    return `${this.#iconsBase}/${iconId}@2x.png`;
-  }
+  return fetch(url).then(res => res.json());
 }
 
-export default Api;
+export const buildImageUrl = imageId => [
+  WEATHER_ICONS_BASE_URL,
+  imageId,
+  WEATHER_ICONS_SUFFIX,
+  WEATHER_ICONS_EXT,
+].join('');
