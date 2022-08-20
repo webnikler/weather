@@ -1,28 +1,53 @@
 import { API_KEY } from '@env'
 import { buildUrl } from './utils/buildUrl';
 
-const WEATHER_FORECAST_BASE_URL = 'https://api.openweathermap.org/data/2.5/forecast';
-const WEATHER_ICONS_BASE_URL = 'http://openweathermap.org/img/wn/';
-const WEATHER_ICONS_SUFFIX = '@2x';
-const WEATHER_ICONS_EXT = '.png';
+const WEATHER_BASE_URL = 'https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/weatherdata';
+const WEATHER_FORECAST_URL = `${WEATHER_BASE_URL}/forecast`;
 
-export const get = async ({
-  coordinates: [lat, lon] = [0, 0],
-  daysCount: cnt = 40,
-  lang = 'ru',
-  units = 'metric',
+export const getForecast = async ({
+  locations,
+  aggregateHours,
+  forecastDays,
+  unitGroup,
+  lang,
 }) => {
-  const appid = API_KEY;
-  const url = buildUrl(WEATHER_FORECAST_BASE_URL, {
-    lat, lon, cnt, appid, units, lang,
+  const contentType = 'json';
+  const locationMode = 'single';
+  const iconSet = 'icons1';
+
+  const url = buildUrl(WEATHER_FORECAST_URL, {
+    locations,
+    aggregateHours,
+    forecastDays,
+    unitGroup,
+    lang,
+    contentType,
+    locationMode,
+    iconSet,
+    key: API_KEY,
   });
 
   return fetch(url).then(res => res.json());
 }
 
-export const buildImageUrl = imageId => [
-  WEATHER_ICONS_BASE_URL,
-  imageId,
-  WEATHER_ICONS_SUFFIX,
-  WEATHER_ICONS_EXT,
-].join('');
+getForecast.forCurrent = async (params) => {
+  const aggregateHours = 1;
+  const forecastDays = 1;
+
+  return getForecast({
+    ...params,
+    aggregateHours,
+    forecastDays,
+  });
+};
+
+getForecast.for7Days = async (params) => {
+  const aggregateHours = 24;
+  const forecastDays = 7;
+
+  return getForecast({
+    ...params,
+    aggregateHours,
+    forecastDays,
+  });
+};
