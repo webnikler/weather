@@ -1,75 +1,53 @@
 import { API_KEY } from '@env'
-import { createContext } from 'react';
-import { WeatherModel } from './model/Weather';
+import { buildUrl } from './utils/buildUrl';
 
-/**
- * Api service
- * Create instance and use it as singleton
- */
-class Api {
-  /**
-   * Use inside components like this -> 'const api = useContext(Api.Context)'
-   */
-  static Context = createContext(new Api());
+const WEATHER_BASE_URL = 'https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/weatherdata';
+const WEATHER_FORECAST_URL = `${WEATHER_BASE_URL}/forecast`;
 
-  /**
-   * Use inside App.js
-   */
-  static Provider = Api.Context.Provider;
+export const getForecast = async ({
+  locations,
+  aggregateHours,
+  forecastDays,
+  unitGroup,
+  lang,
+}) => {
+  const contentType = 'json';
+  const locationMode = 'single';
+  const iconSet = 'icons1';
 
-  #base = 'https://api.openweathermap.org/data/2.5/forecast';
-  #iconsBase = 'http://openweathermap.org/img/wn';
-  #apiKey = '';
+  const url = buildUrl(WEATHER_FORECAST_URL, {
+    locations,
+    aggregateHours,
+    forecastDays,
+    unitGroup,
+    lang,
+    contentType,
+    locationMode,
+    iconSet,
+    key: API_KEY,
+  });
 
-  constructor() {
-    this.#apiKey = API_KEY;
-  }
-
-  /**
-   * Build query params string for request
-   * @param {object} params - Query params as object { name: value, ... }
-   * @returns {string}
-   */
-  #buildQuery(params) {
-    return Object.entries(params)
-      .map(([name, value]) => `${name}=${encodeURIComponent(value)}`)
-      .join('&');
-  }
-
-  /**
-   * Build uri string for request
-   * @param {string} base - Base url without query params
-   * @param {object} params - Query params as object { name: value, ... }
-   * @returns {string}
-   */
-  #buildURI(base, params = {}) {
-    const query = this.#buildQuery(params);
-    return query.length ? `${base}?${query}` : base;
-  }
-
-  /**
-   * https://openweathermap.org/current
-   * @return {Promise} WeatherModel
-   */
-  async getWeather({
-    coordinates: [lat, lon] = [0, 0],
-    daysCount: cnt = 40,
-    lang = 'ru',
-    units = 'metric',
-  }) {
-    const appid = this.#apiKey;
-    const params = { lat, lon, cnt, appid, units, lang };
-
-    const uri = this.#buildURI(this.#base, params);
-    const response = await fetch(uri);
-    const parsedResponse = await response.json();
-
-    return new WeatherModel(parsedResponse);
-  }
-
-  getIconURI(iconId = '') {
-    return `${this.#iconsBase}/${iconId}@2x.png`;
-  }
+  return fetch(url).then(res => res.json());
 }
 
-export default Api;
+getForecast.forCurrent = async (params) => {
+  const aggregateHours = 1;
+  const forecastDays = 1;
+
+  return getForecast({
+    ...params,
+    aggregateHours,
+    forecastDays,
+  });
+};
+
+getForecast.for7Days = async (params) => {
+  const aggregateHours = 24;
+  const forecastDays = 7;
+
+  return getForecast({
+    ...params,
+    aggregateHours,
+    forecastDays,
+  });
+};
