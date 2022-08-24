@@ -12,7 +12,7 @@ const EXPIRATION_TIME = 60 * 60 * 1000;
 
 export const getCurrentRegion = async (payload: RegionPayload): Promise<RegionResponse> => {
   return useApi.post(BASE_URL, payload, {
-    useHeaders: useHeaders.withToken(token),
-    useCache: useCache(REGION_KEY, payload, EXPIRATION_TIME),
+    usedHeaders: useHeaders.withToken(token),
+    usedCache: useCache(REGION_KEY, payload, EXPIRATION_TIME),
   });
 };
