@@ -9,16 +9,16 @@ export enum ForecastView {
   week,
 }
 
-export type ForecastDepends = Omit<DaysForecastPayload, 'locations'>;
+export type ForecastDepends = Omit<DaysForecastPayload, 'location'>;
 
 const loadForecast = async (
   view: ForecastView,
   payload: ForecastDepends
 ): Promise<ForecastItem[]> => {
-  let locations: string;
+  let location: string;
 
   try {
-    locations = await getCoords.string();
+    location = await getCoords.string();
   } catch (err) {
     return [];
   }
@@ -27,7 +27,7 @@ const loadForecast = async (
     ? getForecast.day
     : getForecast.week;
 
-  return apiFn({ ...payload, locations })
+  return apiFn({ ...payload, location })
     .then(data => getForecastItems(data));
 };
 

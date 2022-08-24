@@ -16,13 +16,13 @@ export const getForecast = async (payload: ForecastPayload, key: string): Promis
 
   if (cache) return cache;
 
-  const { locations, aggregateHours, forecastDays, unitGroup, lang } = payload;
+  const { location, aggregateHours, forecastDays, unitGroup, lang } = payload;
   const contentType = 'json';
   const locationMode = 'single';
   const iconSet = 'icons1';
 
   const url = buildUrl(WEATHER_FORECAST_URL, {
-    locations,
+    location,
     aggregateHours,
     forecastDays,
     unitGroup,
