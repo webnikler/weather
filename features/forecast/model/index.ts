@@ -1,4 +1,4 @@
-import { ForecastLocationValue, ForecastResponse } from '../api/types/forecast-response';
+import { ForecastLocationValue, ForecastResponse } from '../types';
 
 export type ForecastItem = {
   // Температура
