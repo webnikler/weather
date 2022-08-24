@@ -1,14 +1,24 @@
 import { useState } from 'react';
 import { Text, View, StyleSheet, Button } from 'react-native';
-import { ForecastView, useForecast } from './features/forecast/forecast';
+import { ForecastView, useForecast } from './features/forecast';
+import { useRegion } from './features/region';
 
 const App = (): JSX.Element => {
-  // @todo add unitGroup selector
   const [unitGroup, setUnitGroup] = useState('us');
-  // @todo add lang selector
   const [lang, setLang] = useState('ru');
   const [view, setView] = useState(ForecastView.day);
-  const { data, loading, error } = useForecast(view, { unitGroup, lang });
+
+  const [location, regionLoading, regionError] = useRegion();
+  const [forecast, forecastLoading, forecastError] = useForecast(view, {
+    unitGroup,
+    lang,
+    location
+  }, {
+    skipEffect: !location,
+  });
+
+  const loading = [regionLoading, forecastLoading].some(loading => loading);
+  const error = regionError || forecastError;
 
   const toggleView = () => setView((view) => +!view);
 
@@ -22,7 +32,8 @@ const App = (): JSX.Element => {
 
   const renderContent = (): JSX.Element => (
     <>
-      <Text>{data.length}</Text>
+      <Text>{forecast && forecast[0]?.description}</Text>
+      <Text>{location}</Text>
       <Button title='Click me' onPress={toggleView} />
     </>
   );
