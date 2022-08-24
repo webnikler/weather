@@ -11,8 +11,8 @@ const enum ApiMethod {
 }
 
 type ApiOptions<P, R> = {
-  useCache?: UseCacheResult<P, R>,
-  useHeaders?: Headers;
+  usedCache?: UseCacheResult<P, R>,
+  usedHeaders?: Headers;
 }
 
 export const useApi = async <P extends ParamsType, R>(
@@ -21,10 +21,10 @@ export const useApi = async <P extends ParamsType, R>(
   payload: P,
   options: ApiOptions<P, R>
 ): Promise<R> => {
-  const { getCache, setCache } = options?.useCache ?? {};
+  const { getCache, setCache } = options?.usedCache ?? {};
   const isCacheUsed = typeof getCache === 'function' && typeof setCache === 'function';
   const cache = isCacheUsed && await getCache();
-  const headers = options?.useHeaders ?? {};
+  const headers = options?.usedHeaders ?? {};
 
   let url: string, body: string;
 

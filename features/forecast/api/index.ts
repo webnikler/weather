@@ -23,7 +23,7 @@ export const getForecast = async (payload: ForecastPayload, key: string): Promis
   };
 
   return useApi.get(FORECAST_URL, fullPayload, {
-    useCache: useCache(key, payload, EXPIRATION_TIME),
+    usedCache: useCache(key, payload, EXPIRATION_TIME),
   });
 }
 
