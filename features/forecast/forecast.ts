@@ -1,8 +1,8 @@
-import { getForecast } from '../../core/api/api';
-import { DaysForecastPayload } from '../../core/api/types/forecast-payload'
-import { ForecastItem, getForecastItems } from '../../core/model/forecast';
+import { DaysForecastPayload } from './types/payload'
+import { ForecastItem, getForecastItems } from './model';
 import { DataLoaderResult, useDataLoader } from '../../core/utils/hooks/data-loader';
 import { getCoords } from '../../core/utils/location';
+import { getForecast } from './api';
 
 export enum ForecastView {
   day,

@@ -1,12 +1,12 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-type CacheData<P, R> = {
+export type CacheData<P, R> = {
   payload: P;
   response: R;
   updateTime: number;
 }
 
-type UseCacheResult<P, R> = {
+export type UseCacheResult<P, R> = {
   getCache: () => Promise<R>;
   setCache: (response: R) => Promise<CacheData<P, R>>;
 }
