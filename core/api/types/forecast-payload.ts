@@ -6,4 +6,4 @@ export type ForecastPayload = {
   lang: string;
 }
 
-export type DaysForecastPayload = Omit<ForecastPayload, 'aggregateHours' & 'forecastDays'>;
+export type DaysForecastPayload = Omit<ForecastPayload, 'aggregateHours' | 'forecastDays'>;

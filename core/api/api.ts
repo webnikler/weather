@@ -1,14 +1,14 @@
 import { API_KEY } from '@env'
-import { useCache } from './cache/cache';
+import { useCache } from '../utils/hooks/cache';
 import { DaysForecastPayload, ForecastPayload } from './types/forecast-payload';
 import { ForecastResponse } from './types/forecast-response';
-import { buildUrl } from './utils/build-url';
+import { buildUrl } from '../utils/build-url';
 
 const WEATHER_BASE_URL = 'https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/weatherdata';
 const WEATHER_FORECAST_URL = `${WEATHER_BASE_URL}/forecast`;
 
-const WEATHER_FOR_CURRENT_DAY_KEY = 'WEATHER_FOR_CURRENT_DAY';
-const WEATHER_FOR_7_DAYS_KEY = 'WEATHER_FOR_7_DAYS';
+const WEATHER_FORECAST_DAY_KEY = 'WEATHER_FORECAST_DAY';
+const WEATHER_FORECAST_WEEK_KEY = 'WEATHER_FORECAST_WEEK';
 
 export const getForecast = async (payload: ForecastPayload, key: string): Promise<ForecastResponse> => {
   const { getCache, setCache } = useCache<ForecastPayload, ForecastResponse>(key, payload);
@@ -35,10 +35,11 @@ export const getForecast = async (payload: ForecastPayload, key: string): Promis
 
   return fetch(url)
     .then(res => res.json())
-    .then(res => setCache(res));
+    .then(res => setCache(res))
+    .then(res => res.response);
 }
 
-getForecast.forCurrent = async (payload: DaysForecastPayload): Promise<ForecastResponse> => {
+getForecast.day = async (payload: DaysForecastPayload): Promise<ForecastResponse> => {
   const aggregateHours = 1;
   const forecastDays = 1;
 
@@ -46,10 +47,10 @@ getForecast.forCurrent = async (payload: DaysForecastPayload): Promise<ForecastR
     ...payload,
     aggregateHours,
     forecastDays,
-  }, WEATHER_FOR_CURRENT_DAY_KEY);
+  }, WEATHER_FORECAST_DAY_KEY);
 };
 
-getForecast.for7Days = async (payload: DaysForecastPayload): Promise<ForecastResponse> => {
+getForecast.week = async (payload: DaysForecastPayload): Promise<ForecastResponse> => {
   const aggregateHours = 24;
   const forecastDays = 7;
 
@@ -57,5 +58,5 @@ getForecast.for7Days = async (payload: DaysForecastPayload): Promise<ForecastRes
     ...payload,
     aggregateHours,
     forecastDays,
-  }, WEATHER_FOR_7_DAYS_KEY);
+  }, WEATHER_FORECAST_WEEK_KEY);
 };

@@ -1,4 +1,4 @@
-type ForecastLocationValue = {
+export type ForecastLocationValue = {
   wdir: number;
   uvindex: number;
   datetimeStr: string;
@@ -29,7 +29,7 @@ type ForecastLocationValue = {
   cape: number;
 };
 
-type ForecastCurrentConditions = {
+export type ForecastCurrentConditions = {
   wdir: number;
   temp: number;
   sunrise: string;
@@ -51,7 +51,7 @@ type ForecastCurrentConditions = {
   windchill: null;
 };
 
-type ForecastLocation = {
+export type ForecastLocation = {
   stationContributions: null;
   values: Array<ForecastLocationValue>;
   id: string;
@@ -67,7 +67,7 @@ type ForecastLocation = {
   alerts: null;
 };
 
-type ForecastColumn = {
+export type ForecastColumn = {
   id: string;
   name: string;
   type: number;
@@ -79,5 +79,5 @@ export type ForecastResponse = {
   remainingCost: number;
   queryCost: number;
   messages: null;
-  locations: { [key: string]: ForecastLocation };
+  location: ForecastLocation;
 };
