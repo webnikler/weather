@@ -11,7 +11,7 @@ const FORECAST_CONTENT_TYPE = 'json';
 const FORECAST_LOCATION_MODE = 'single';
 const FORECAST_ICONSET = 'icons1';
 
-const EXPIRATION_TIME = 60 * 1000;
+const EXPIRATION_TIME = 60 * 60 * 1000;
 
 export const getForecast = async (payload: ForecastPayload, key: string): Promise<ForecastResponse> => {
   const fullPayload = {
@@ -22,7 +22,9 @@ export const getForecast = async (payload: ForecastPayload, key: string): Promis
     iconSet: FORECAST_ICONSET,
   };
 
-  return useApi.get(FORECAST_URL, fullPayload, useCache(key, payload, EXPIRATION_TIME));
+  return useApi.get(FORECAST_URL, fullPayload, {
+    useCache: useCache(key, payload, EXPIRATION_TIME),
+  });
 }
 
 getForecast.day = async (payload: DaysForecastPayload): Promise<ForecastResponse> => {

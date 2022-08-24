@@ -1,6 +1,6 @@
 import * as Location from 'expo-location';
 
-type LocationCoords = [number, number];
+export type LocationCoords = [number, number];
 
 export const getCoords = async (): Promise<LocationCoords> => {
   const requestPermissions = () => Location.requestForegroundPermissionsAsync();
