@@ -1,9 +1,15 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useReducer } from 'react';
 
-export type DataLoaderResult<D> = [D, boolean, Error];
+export type DataLoaderResult<R> = [boolean, R, Error];
 
 export type DataLoaderOptions = {
   skipEffect?: boolean;
+}
+
+export type DataLoaderState<D> = {
+  loading: boolean;
+  data: D;
+  error: Error;
 }
 
 export const useDataLoader = <R>(
@@ -11,19 +17,34 @@ export const useDataLoader = <R>(
   depends: any[] = [],
   options?: DataLoaderOptions
 ): DataLoaderResult<R> => {
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [data, setData] = useState(null);
 
-  useEffect(() => {
+  const reducer = (
+    state: DataLoaderState<R>,
+    newState: Partial<DataLoaderState<R>>
+  ) => ({
+    ...state,
+    ...newState
+  });
+
+  const initialState = {
+    loading: !options?.skipEffect,
+    data: null,
+    error: null,
+  };
+
+  const [{ loading, data, error }, dispatch] = useReducer(reducer, initialState);
+
+  const load = () => {
     if (options?.skipEffect) return;
 
-    setLoading(true);
-    asyncFn()
-      .then(d => setData(d))
-      .catch(e => setError(e))
-      .finally(() => setLoading(false));
-  }, depends);
+    dispatch({ loading: true });
 
-  return [data, loading, error];
+    asyncFn()
+      .then(data => dispatch({ loading: false, data }))
+      .catch(error => dispatch({ loading: false, error }));
+  }
+
+  useEffect(() => load(), depends);
+
+  return [loading, data, error];
 };

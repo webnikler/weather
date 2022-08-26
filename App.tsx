@@ -7,16 +7,18 @@ const App = (): JSX.Element => {
   const [unitGroup, setUnitGroup] = useState('us');
   const [lang, setLang] = useState('ru');
   const [view, setView] = useState(ForecastView.day);
-
-  const [location, regionLoading, regionError] = useRegion();
-  const [forecast, forecastLoading, forecastError] = useForecast(view, {
-    unitGroup,
-    lang,
-    location
-  }, {
-    skipEffect: !location,
-  });
-
+  const [
+    regionLoading,
+    regionData,
+    regionError
+  ] = useRegion();
+  const useForecastDepends = { unitGroup, lang, location: regionData };
+  const useForecastOptions = { skipEffect: !regionData };
+  const [
+    forecastLoading,
+    forecastData,
+    forecastError
+  ] = useForecast(view, useForecastDepends, useForecastOptions);
   const loading = [regionLoading, forecastLoading].some(loading => loading);
   const error = regionError || forecastError;
 
@@ -32,8 +34,8 @@ const App = (): JSX.Element => {
 
   const renderContent = (): JSX.Element => (
     <>
-      <Text>{forecast && forecast[0]?.description}</Text>
-      <Text>{location}</Text>
+      <Text>{forecastData && forecastData[0]?.description}</Text>
+      <Text>{regionData}</Text>
       <Button title='Click me' onPress={toggleView} />
     </>
   );
