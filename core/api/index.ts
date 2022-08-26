@@ -26,7 +26,7 @@ export const useApi = async <P extends ParamsType, R>(
   const cache = isCacheUsed && await getCache();
   const headers = options?.usedHeaders ?? {};
 
-  let url: string, body: string;
+  let url: string = base, body: string;
 
   if (cache) return cache;
 
@@ -35,7 +35,6 @@ export const useApi = async <P extends ParamsType, R>(
       url = buildUrl(base, payload);
       break;
     case ApiMethod.post: case ApiMethod.put:
-      url = base;
       body = JSON.stringify(payload);
       break;
   }
