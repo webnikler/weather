@@ -1,7 +1,7 @@
 import { ParamsType } from '../types/params';
-import { buildUrl } from '../utils/build-url';
-import { UseCacheResult } from '../utils/hooks/cache';
-import { Headers } from '../utils/hooks/headers';
+import { buildUrl } from '../utils/builders/url';
+import { Headers } from '../utils/builders/headers';
+import { CacheInstance } from '../utils/builders/cache';
 
 const enum ApiMethod {
   post = 'POST',
@@ -11,8 +11,8 @@ const enum ApiMethod {
 }
 
 type ApiOptions<P, R> = {
-  usedCache?: UseCacheResult<P, R>,
-  usedHeaders?: Headers;
+  cache?: CacheInstance<P, R>,
+  headers?: Headers;
 }
 
 type ApiArguments<P, R> = [string, P, ApiOptions<P, R>];
@@ -23,9 +23,9 @@ export const useApi = async <P extends ParamsType, R>(
   payload: P,
   options: ApiOptions<P, R>
 ): Promise<R> => {
-  const { getCache, setCache } = options?.usedCache ?? {};
+  const { getCache, setCache } = options?.cache ?? {};
   const cache = getCache && await getCache();
-  const headers = options?.usedHeaders ?? {};
+  const headers = options?.headers ?? {};
 
   let url: string = base, body = null;
 
