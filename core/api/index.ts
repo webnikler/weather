@@ -1,4 +1,3 @@
-import { ParamsType } from '../types/params';
 import { buildUrl } from '../utils/builders/url';
 import { Headers } from '../utils/builders/headers';
 import { CacheInstance } from '../utils/builders/cache';
@@ -17,7 +16,7 @@ type ApiOptions<P, R> = {
 
 type ApiArguments<P, R> = [string, P, ApiOptions<P, R>];
 
-export const useApi = async <P extends ParamsType, R>(
+export const useApi = async <P extends object, R>(
   method: ApiMethod,
   base: string,
   payload: P,
@@ -46,11 +45,11 @@ export const useApi = async <P extends ParamsType, R>(
     .then(res => res.response);
 };
 
-useApi.get = <P extends ParamsType, R>(...args: ApiArguments<P, R>) => useApi<P, R>(ApiMethod.get, ...args);
+useApi.get = <P extends object, R>(...args: ApiArguments<P, R>) => useApi<P, R>(ApiMethod.get, ...args);
 
-useApi.post = <P extends ParamsType, R>(...args: ApiArguments<P, R>) => useApi<P, R>(ApiMethod.post, ...args);
+useApi.post = <P extends object, R>(...args: ApiArguments<P, R>) => useApi<P, R>(ApiMethod.post, ...args);
 
-useApi.put = <P extends ParamsType, R>(...args: ApiArguments<P, R>) => useApi<P, R>(ApiMethod.put, ...args);
+useApi.put = <P extends object, R>(...args: ApiArguments<P, R>) => useApi<P, R>(ApiMethod.put, ...args);
 
-useApi.delete = <P extends ParamsType, R>(...args: ApiArguments<P, R>) => useApi<P, R>(ApiMethod.delete, ...args);
+useApi.delete = <P extends object, R>(...args: ApiArguments<P, R>) => useApi<P, R>(ApiMethod.delete, ...args);
 

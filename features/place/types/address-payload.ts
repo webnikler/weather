@@ -1,4 +1,4 @@
-export type RegionPayload = {
+export type AddressPayload = {
   lat: number,
   lon: number;
   count?: number,

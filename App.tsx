@@ -3,32 +3,33 @@ import {
   Text,
   NativeBaseProvider,
   Box,
-  Button,
-  Center,
+  ScrollView,
+  Fab,
+  Heading,
 } from "native-base";
 
 import { useState } from 'react';
 import { ForecastView, useForecast } from './features/forecast';
-import { useRegion } from './features/region';
+import { useCurrentPlace } from './features/place';
 
 const App = (): JSX.Element => {
-  const [unitGroup, setUnitGroup] = useState('us');
+  const [unitGroup, setUnitGroup] = useState('metric');
   const [lang, setLang] = useState('ru');
-  const [view, setView] = useState(ForecastView.day);
+  const [view, setView] = useState(ForecastView.week);
   const [
-    regionLoading,
-    regionData,
-    regionError
-  ] = useRegion();
-  const useForecastDepends = { unitGroup, lang, location: regionData };
-  const useForecastOptions = { skipEffect: !regionData };
+    placeLoading,
+    placeData,
+    placeError
+  ] = useCurrentPlace();
+  const useForecastDepends = { unitGroup, lang, location: placeData };
+  const useForecastOptions = { skipEffect: !placeData };
   const [
     forecastLoading,
-    forecastData,
+    forecastList,
     forecastError
   ] = useForecast(view, useForecastDepends, useForecastOptions);
-  const loading = [regionLoading, forecastLoading].some(loading => loading);
-  const error = regionError || forecastError;
+  const loading = [placeLoading, forecastLoading].some(loading => loading);
+  const error = placeError || forecastError;
 
   const toggleView = () => setView((view) => +!view);
 
@@ -41,11 +42,39 @@ const App = (): JSX.Element => {
   );
 
   const renderContent = (): JSX.Element => (
-    <>
-      <Text>{forecastData && forecastData[0]?.description}</Text>
-      <Text>{regionData}</Text>
-      <Button onPress={toggleView}>Toggle view</Button>
-    </>
+    <ScrollView padding={4}>
+      <Box safeAreaTop={8}></Box>
+      <Heading>
+        Данные за {
+          view === ForecastView.week
+            ? '7 дней'
+            : '7 часов'
+        }
+      </Heading>
+      <Text>Местоположениe: {placeData}</Text>
+      {
+        forecastList?.map((data) => (
+          <Box
+            key={data.datetime}
+            padding={4}
+            backgroundColor='lightBlue.300'
+            borderRadius={12}
+            shadow={1}
+            marginTop={4}
+          >
+            <Text>Дата: {data.date}</Text>
+            <Text>Время: {data.time}</Text>
+            <Text>Температура: {data.temperature}°</Text>
+            <Text>Скорость ветра: {data.windSpeed} м/с</Text>
+            <Text>Влажность: {data.humidity}%</Text>
+            <Text>Вероятность дождя: {data.rainChance}%</Text>
+            <Text>Описание: {data.description}</Text>
+          </Box>
+        ))
+      }
+      <Box safeAreaBottom={12}></Box>
+      <Fab size={12} onPress={toggleView} />
+    </ScrollView>
   );
 
   const render = (): JSX.Element => {
@@ -60,9 +89,7 @@ const App = (): JSX.Element => {
 
   return (
     <NativeBaseProvider>
-      <Center height="100%">
-        <Box>{render()}</Box>
-      </Center>
+      {render()}
     </NativeBaseProvider>
   );
 }
