@@ -1,15 +1,15 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export type CacheItem<P, R> = {
+export type CacheData<P, R> = {
   payload: P;
   response: R;
   updateTime: number;
 }
 
 export type GetCacheReturnType<R> = Promise<R | null>;
-export type SetCacheReturnType<P, R> = Promise<CacheItem<P, R>>;
+export type SetCacheReturnType<P, R> = Promise<CacheData<P, R>>;
 
-export type UseCacheResult<P, R> = {
+export type CacheInstance<P, R> = {
   getCache: () => GetCacheReturnType<R>;
   setCache: (response: R) => SetCacheReturnType<P, R>;
 }
@@ -17,7 +17,7 @@ export type UseCacheResult<P, R> = {
 const DEFAULT_EXPIRATION_TIME = 60 * 1000;
 
 const getCache = async <P, R>(key: string, payload: P, expirationTime: number): GetCacheReturnType<R> => {
-  const data: CacheItem<P, R> = JSON.parse((await AsyncStorage.getItem(key)) as string);
+  const data: CacheData<P, R> = JSON.parse((await AsyncStorage.getItem(key)) as string);
 
   if (!data) {
     return null;
@@ -37,14 +37,14 @@ const getCache = async <P, R>(key: string, payload: P, expirationTime: number): 
 };
 
 const setCache = async <P, R>(key: string, payload: P, response: R): SetCacheReturnType<P, R> => {
-  const result: CacheItem<P, R> = { payload, response, updateTime: Number(new Date()) };
+  const result: CacheData<P, R> = { payload, response, updateTime: Number(new Date()) };
 
   await AsyncStorage.setItem(key, JSON.stringify(result));
 
   return result;
 };
 
-export const useCache = <P, R>(key: string, payload: P, expirationTime?: number): UseCacheResult<P, R> => {
+export const buildCache = <P, R>(key: string, payload: P, expirationTime?: number): CacheInstance<P, R> => {
   return {
     getCache: () => getCache<P, R>(key, payload, expirationTime ?? DEFAULT_EXPIRATION_TIME),
     setCache: (response: R) => setCache<P, R>(key, payload, response),

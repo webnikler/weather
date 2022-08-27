@@ -1,6 +1,6 @@
 import { WEATHER_API_TOKEN } from '@env';
 import { useApi } from '../../../core/api';
-import { useCache } from '../../../core/utils/hooks/cache';
+import { buildCache } from '../../../core/utils/builders/cache';
 import { DaysForecastPayload, ForecastPayload, ForecastResponse } from '../types';
 
 const BASE_URL = 'https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/weatherdata';
@@ -23,7 +23,7 @@ export const getForecast = async (payload: ForecastPayload, key: string): Promis
   };
 
   return useApi.get(FORECAST_URL, fullPayload, {
-    usedCache: useCache(key, payload, EXPIRATION_TIME),
+    cache: buildCache(key, payload, EXPIRATION_TIME),
   });
 }
 

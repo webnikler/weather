@@ -1,4 +1,4 @@
-import { ParamsType } from '../types/params';
+import { ParamsType } from '../../types/params';
 
 export const buildUrl = (base: string, params: ParamsType): string => {
   const queryParamsString = buildQueryParamsString(params);
