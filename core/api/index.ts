@@ -16,6 +16,17 @@ type ApiOptions<P, R> = {
 
 type ApiArguments<P, R> = [string, P, ApiOptions<P, R>];
 
+const handleApiError = async (response: Response): Promise<Response> => {
+  if (response.ok) {
+    return response;
+  }
+
+  const res = await response.json();
+  const message = res?.message ?? `Api error with status code ${response.status}`;
+
+  throw Error(message);
+};
+
 export const useApi = async <P extends object, R>(
   method: ApiMethod,
   base: string,
@@ -40,9 +51,9 @@ export const useApi = async <P extends object, R>(
   }
 
   return fetch(url, { method, body, headers })
+    .then(res => handleApiError(res))
     .then(res => res.json())
-    .then(res => setCache ? setCache(res) : { response: res })
-    .then(res => res.response);
+    .then(async res => setCache ? (await setCache(res)).response : res);
 };
 
 useApi.get = <P extends object, R>(...args: ApiArguments<P, R>) => useApi<P, R>(ApiMethod.get, ...args);
