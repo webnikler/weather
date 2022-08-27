@@ -8,6 +8,10 @@ export const useCurrentPlace = (): DataLoaderResult<string> => {
     const [lat, lon] = await getGeoPosition();
     const response = await getAddressByCoordinates({ lat, lon, count: 1 });
 
+    if (!response.suggestions.length) {
+      throw Error('Не удалось найти населенный пункт по координатам устройства');
+    }
+
     return parseAddressToString(response);
   }, []);
 };

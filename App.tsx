@@ -6,6 +6,8 @@ import {
   ScrollView,
   Fab,
   Heading,
+  Alert,
+  HStack,
 } from "native-base";
 
 import { useState } from 'react';
@@ -34,7 +36,12 @@ const App = (): JSX.Element => {
   const toggleView = () => setView((view) => +!view);
 
   const renderError = (): JSX.Element => (
-    <Text>Error</Text>
+    <Alert safeArea status='error'>
+      <HStack space={4} padding={2}>
+        <Alert.Icon mt="1" />
+        <Text>{error?.message || 'Unknown error'}</Text>
+      </HStack>
+    </Alert>
   );
 
   const renderLoading = (): JSX.Element => (
