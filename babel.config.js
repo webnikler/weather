@@ -2,9 +2,6 @@ module.exports = function (api) {
   api.cache(true);
   return {
     presets: ['babel-preset-expo'],
-    plugins: [
-      ['@babel/plugin-proposal-private-methods', { loose: true }],
-      ['module:react-native-dotenv'],
-    ],
+    plugins: ['module:react-native-dotenv'],
   };
 };

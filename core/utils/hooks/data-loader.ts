@@ -1,15 +1,22 @@
 import { useEffect, useReducer } from 'react';
 
-export type DataLoaderResult<R> = [boolean, R, Error];
+type DataLoaderData<D> = D | null;
+type DataLoaderError = Error | null;
 
-export type DataLoaderOptions = {
-  skipEffect?: boolean;
-}
+export type DataLoaderResult<R> = [
+  boolean,
+  DataLoaderData<R>,
+  DataLoaderError
+];
 
 export type DataLoaderState<D> = {
   loading: boolean;
-  data: D;
-  error: Error;
+  data: D | null;
+  error: Error | null;
+}
+
+export type DataLoaderOptions = {
+  skipEffect?: boolean;
 }
 
 export const useDataLoader = <R>(
@@ -21,12 +28,11 @@ export const useDataLoader = <R>(
   const reducer = (
     state: DataLoaderState<R>,
     newState: Partial<DataLoaderState<R>>
-  ) => ({
-    ...state,
-    ...newState
-  });
+  ): DataLoaderState<R> => {
+    return { ...state, ...newState };
+  };
 
-  const initialState = {
+  const initialState: DataLoaderState<R> = {
     loading: !options?.skipEffect,
     data: null,
     error: null,

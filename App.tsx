@@ -1,5 +1,13 @@
+import React from "react";
+import {
+  Text,
+  NativeBaseProvider,
+  Box,
+  Button,
+  Center,
+} from "native-base";
+
 import { useState } from 'react';
-import { Text, View, StyleSheet, Button } from 'react-native';
 import { ForecastView, useForecast } from './features/forecast';
 import { useRegion } from './features/region';
 
@@ -36,7 +44,7 @@ const App = (): JSX.Element => {
     <>
       <Text>{forecastData && forecastData[0]?.description}</Text>
       <Text>{regionData}</Text>
-      <Button title='Click me' onPress={toggleView} />
+      <Button onPress={toggleView}>Toggle view</Button>
     </>
   );
 
@@ -51,18 +59,12 @@ const App = (): JSX.Element => {
   }
 
   return (
-    <View style={styles.main}>
-      {render()}
-    </View>
+    <NativeBaseProvider>
+      <Center height="100%">
+        <Box>{render()}</Box>
+      </Center>
+    </NativeBaseProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  main: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  }
-});
 
 export default App;
