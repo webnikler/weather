@@ -1,6 +1,4 @@
-import { ParamsType } from '../../types/params';
-
-export const buildUrl = (base: string, params: ParamsType): string => {
+export const buildUrl = (base: string, params: object): string => {
   const queryParamsString = buildQueryParamsString(params);
 
   if (queryParamsString.length) {
@@ -10,6 +8,6 @@ export const buildUrl = (base: string, params: ParamsType): string => {
   }
 };
 
-const buildQueryParamsString = <P extends ParamsType>(params: P): string => Object.entries(params)
-  .map(([name, value]) => `${name}=${encodeURIComponent(value ?? '')}`)
+const buildQueryParamsString = <P>(params: P): string => Object.entries(params)
+  .map(([name, value]) => `${name}=${encodeURIComponent(value)}`)
   .join('&');

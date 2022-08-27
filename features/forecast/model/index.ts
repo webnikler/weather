@@ -1,3 +1,5 @@
+import { capitalize } from '../../../core/utils/converters/capitalize';
+import { formatTimeUnit } from '../../../core/utils/converters/format-time-unit';
 import { ForecastLocationValue, ForecastResponse } from '../types';
 
 export type ForecastItem = {
@@ -15,20 +17,41 @@ export type ForecastItem = {
   rainChance: number;
   // Время прогноза в формате {часы}:{минуты}
   time: string;
+  // Исходное значение времени
+  datetime: number;
 }
 
-const parseForecastValue = (value: ForecastLocationValue): ForecastItem => {
+const formatDate = (dateTime: number, lang: string): string => {
+  const date = new Date(dateTime);
+  const dayName = capitalize(date.toLocaleString(lang, { weekday: 'long' }));
+  const monthName = capitalize(date.toLocaleString(lang, { month: 'long' }));
+  const dayNumber = date.getDate();
+
+  return `${dayName}, ${dayNumber} ${monthName}`;
+}
+
+const formatTime = (dateTime: number): string => {
+  const date = new Date(dateTime);
+
+  return [
+    formatTimeUnit(date.getHours()),
+    formatTimeUnit(date.getMinutes()),
+  ].join(':');
+}
+
+const parseForecastValue = (value: ForecastLocationValue, lang: string): ForecastItem => {
   return {
     temperature: value.temp,
     description: value.conditions,
-    date: value.datetime.toString(),
+    date: formatDate(value.datetime, lang),
     windSpeed: value.wspd,
     humidity: value.humidity,
     rainChance: value.pop,
-    time: value.datetime.toString(),
+    time: formatTime(value.datetime),
+    datetime: value.datetime,
   };
 };
 
-export const getForecastItems = (forecastResponse: ForecastResponse): ForecastItem[] => {
-  return forecastResponse.location.values.map(v => parseForecastValue(v));
+export const getForecastItems = (forecastResponse: ForecastResponse, lang: string): ForecastItem[] => {
+  return forecastResponse.location.values.map(v => parseForecastValue(v, lang));
 }

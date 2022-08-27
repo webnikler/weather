@@ -1,14 +1,14 @@
-export type RegionResponse = {
-  suggestions: RegionSuggestion[];
+export type AddressResponse = {
+  suggestions: AddressSuggestion[];
 }
 
-export type RegionSuggestion = {
-  data: RegionData;
+export type AddressSuggestion = {
+  data: AddressData;
   unrestricted_value: string;
   value: string;
 }
 
-export type RegionData = {
+export type AddressData = {
   area: string;
   area_fias_id: string;
   area_kladr_id: number;
