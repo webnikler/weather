@@ -1,5 +1,5 @@
 export type ForecastPayload = {
-  location: string;
+  location: string | null;
   aggregateHours: number;
   forecastDays: number;
   unitGroup: string;

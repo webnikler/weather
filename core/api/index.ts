@@ -15,6 +15,8 @@ type ApiOptions<P, R> = {
   usedHeaders?: Headers;
 }
 
+type ApiArguments<P, R> = [string, P, ApiOptions<P, R>];
+
 export const useApi = async <P extends ParamsType, R>(
   method: ApiMethod,
   base: string,
@@ -22,11 +24,10 @@ export const useApi = async <P extends ParamsType, R>(
   options: ApiOptions<P, R>
 ): Promise<R> => {
   const { getCache, setCache } = options?.usedCache ?? {};
-  const isCacheUsed = typeof getCache === 'function' && typeof setCache === 'function';
-  const cache = isCacheUsed && await getCache();
+  const cache = getCache && await getCache();
   const headers = options?.usedHeaders ?? {};
 
-  let url: string = base, body: string;
+  let url: string = base, body = null;
 
   if (cache) return cache;
 
@@ -41,14 +42,15 @@ export const useApi = async <P extends ParamsType, R>(
 
   return fetch(url, { method, body, headers })
     .then(res => res.json())
-    .then(res => isCacheUsed ? setCache(res) : { response: res })
+    .then(res => setCache ? setCache(res) : { response: res })
     .then(res => res.response);
 };
 
-useApi.get = useApi.bind(null, ApiMethod.get);
+useApi.get = <P extends ParamsType, R>(...args: ApiArguments<P, R>) => useApi<P, R>(ApiMethod.get, ...args);
 
-useApi.post = useApi.bind(null, ApiMethod.post);
+useApi.post = <P extends ParamsType, R>(...args: ApiArguments<P, R>) => useApi<P, R>(ApiMethod.post, ...args);
 
-useApi.put = useApi.bind(null, ApiMethod.put);
+useApi.put = <P extends ParamsType, R>(...args: ApiArguments<P, R>) => useApi<P, R>(ApiMethod.put, ...args);
 
-useApi.delete = useApi.bind(null, ApiMethod.delete);
+useApi.delete = <P extends ParamsType, R>(...args: ApiArguments<P, R>) => useApi<P, R>(ApiMethod.delete, ...args);
+
