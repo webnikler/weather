@@ -18,6 +18,8 @@ const loadForecast = async (
     getForecast.day
 
 
+
+
     :
 
     getForecast.week
