@@ -15,4 +15,4 @@ jobs:
           token: ${{ secrets.TELEGRAM_TOKEN }}
           format: markdown
           message: |
-            👤 [${{ github.actor }}](https://github.com/${{ github.actor }}) захуячил пуш в мастер!
+            👤 [${{ github.actor }}](https://github.com/${{ github.actor }}) захуячил пуш в мастер! [Посмотреть изменения](https://github.com/${{ github.repository }}/commit/${{github.sha}})
