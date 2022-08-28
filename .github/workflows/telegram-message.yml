@@ -12,6 +12,7 @@ jobs:
         uses: appleboy/telegram-action@master
         with:
           to: ${{ secrets.TELEGRAM_TO }}
+          photo: assets/icon.png
           token: ${{ secrets.TELEGRAM_TOKEN }}
           format: markdown
           message: |
