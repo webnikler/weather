@@ -9,23 +9,13 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "eject": "expo eject",
-    "lint": "npx eslint",
-    "lint:fix": "npx eslint --fix",
-    "prettier": "prettier --write ./**/*.(ts|tsx)"
+    "lint": "npx eslint --ext .ts --ext .tsx",
+    "lint:fix": "npx eslint --ext .ts --ext .tsx --fix",
+    "prettier": "prettier --write",
+    "prepare": "husky install"
   },
   "eslintConfig": {
     "extends": "universe/native"
-  },
-  "lint-staged": {
-    "*.(ts|tsx)": [
-      "npm run lint:fix",
-      "git add"
-    ]
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "~1.15.0",

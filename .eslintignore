@@ -2,5 +2,6 @@
 /.vscode
 /.expo
 /.expo-shared
-assets
-node_modules
+ **/*.d.ts
+/assets/*
+/node_modules/*

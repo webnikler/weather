@@ -1,7 +1,11 @@
-import { DaysForecastPayload } from './types/payload'
-import { ForecastItem, getForecastItems } from './model';
-import { DataLoaderOptions, DataLoaderResult, useDataLoader } from '../../core/utils/hooks/data-loader';
+import {
+  DataLoaderOptions,
+  DataLoaderResult,
+  useDataLoader,
+} from '../../core/utils/hooks/data-loader';
 import { getForecast } from './api';
+import { ForecastItem, getForecastItems } from './model';
+import { DaysForecastPayload } from './types/payload';
 
 export enum ForecastView {
   day,
@@ -12,21 +16,8 @@ const loadForecast = async (
   view: ForecastView,
   payload: DaysForecastPayload
 ): Promise<ForecastItem[]> => {
-  const apiFn = view === ForecastView.day
-    ?
-
-    getForecast.day
-
-
-
-
-    :
-
-    getForecast.week
-    ;
-  const response = await apiFn(
-    payload
-  );
+  const apiFn = view === ForecastView.day ? getForecast.day : getForecast.week;
+  const response = await apiFn(payload);
 
   return getForecastItems(response, payload.lang).slice(0, 7);
 };
@@ -34,12 +25,11 @@ const loadForecast = async (
 export const useForecast = (
   view: ForecastView,
   payload: DaysForecastPayload,
-  options?: DataLoaderOptions,
+  options?: DataLoaderOptions
 ): DataLoaderResult<ForecastItem[]> => {
-  return useDataLoader(() => loadForecast(view, payload), [
-    payload.unitGroup,
-    payload.lang,
-    payload.location,
-    view,
-  ], options);
-}
+  return useDataLoader(
+    () => loadForecast(view, payload),
+    [payload.unitGroup, payload.lang, payload.location, view],
+    options
+  );
+};
