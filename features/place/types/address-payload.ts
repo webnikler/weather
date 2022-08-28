@@ -1,7 +1,7 @@
 export type AddressPayload = {
-  lat: number,
+  lat: number;
   lon: number;
-  count?: number,
+  count?: number;
   radius_meters?: number;
   language?: string;
 };

@@ -4,6 +4,6 @@ export type ForecastPayload = {
   forecastDays: number;
   unitGroup: string;
   lang: string;
-}
+};
 
 export type DaysForecastPayload = Omit<ForecastPayload, 'aggregateHours' | 'forecastDays'>;

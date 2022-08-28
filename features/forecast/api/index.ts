@@ -1,9 +1,11 @@
+import { api } from '@api';
+import { buildCache } from '@builders/cache';
 import { WEATHER_API_TOKEN } from '@env';
-import { useApi } from '../../../core/api';
-import { buildCache } from '../../../core/utils/builders/cache';
+
 import { DaysForecastPayload, ForecastPayload, ForecastResponse } from '../types';
 
-const BASE_URL = 'https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/weatherdata';
+const BASE_URL =
+  'https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/weatherdata';
 const FORECAST_URL = `${BASE_URL}/forecast`;
 const FORECAST_DAY_KEY = 'WEATHER_FORECAST_DAY';
 const FORECAST_WEEK_KEY = 'WEATHER_FORECAST_WEEK';
@@ -13,7 +15,10 @@ const FORECAST_ICONSET = 'icons1';
 
 const EXPIRATION_TIME = 60 * 60 * 1000;
 
-export const getForecast = async (payload: ForecastPayload, key: string): Promise<ForecastResponse> => {
+export const getForecast = async (
+  payload: ForecastPayload,
+  key: string
+): Promise<ForecastResponse> => {
   const fullPayload = {
     ...payload,
     key: WEATHER_API_TOKEN,
@@ -22,10 +27,10 @@ export const getForecast = async (payload: ForecastPayload, key: string): Promis
     iconSet: FORECAST_ICONSET,
   };
 
-  return useApi.get(FORECAST_URL, fullPayload, {
+  return api.get(FORECAST_URL, fullPayload, {
     cache: buildCache(key, payload, EXPIRATION_TIME),
   });
-}
+};
 
 getForecast.day = async (payload: DaysForecastPayload): Promise<ForecastResponse> => {
   const fullPayload = {

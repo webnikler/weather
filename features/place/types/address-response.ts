@@ -1,12 +1,12 @@
 export type AddressResponse = {
   suggestions: AddressSuggestion[];
-}
+};
 
 export type AddressSuggestion = {
   data: AddressData;
   unrestricted_value: string;
   value: string;
-}
+};
 
 export type AddressData = {
   area: string;
@@ -101,4 +101,4 @@ export type AddressData = {
   tax_office_legal: number;
   timezone: null;
   unparsed_parts: null;
-}
+};

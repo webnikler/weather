@@ -1,6 +1,6 @@
-import { buildUrl } from '../utils/builders/url';
-import { Headers } from '../utils/builders/headers';
-import { CacheInstance } from '../utils/builders/cache';
+import { CacheInstance } from '@builders/cache';
+import { Headers } from '@builders/headers';
+import { buildUrl } from '@builders/url';
 
 const enum ApiMethod {
   post = 'POST',
@@ -10,9 +10,9 @@ const enum ApiMethod {
 }
 
 type ApiOptions<P, R> = {
-  cache?: CacheInstance<P, R>,
+  cache?: CacheInstance<P, R>;
   headers?: Headers;
-}
+};
 
 type ApiArguments<P, R> = [string, P, ApiOptions<P, R>];
 
@@ -27,40 +27,43 @@ const handleApiError = async (response: Response): Promise<Response> => {
   throw Error(message);
 };
 
-export const useApi = async <P extends object, R>(
+export const api = async <P extends object, R>(
   method: ApiMethod,
   base: string,
   payload: P,
   options: ApiOptions<P, R>
 ): Promise<R> => {
   const { getCache, setCache } = options?.cache ?? {};
-  const cache = getCache && await getCache();
+  const cache = getCache && (await getCache());
   const headers = options?.headers ?? {};
 
-  let url: string = base, body = null;
+  let url: string = base,
+    body = null;
 
   if (cache) return cache;
 
   switch (method) {
-    case ApiMethod.get: case ApiMethod.delete:
+    case ApiMethod.get:
+    case ApiMethod.delete:
       url = buildUrl(base, payload);
       break;
-    case ApiMethod.post: case ApiMethod.put:
+    case ApiMethod.post:
+    case ApiMethod.put:
       body = JSON.stringify(payload);
       break;
   }
 
   return fetch(url, { method, body, headers })
-    .then(res => handleApiError(res))
-    .then(res => res.json())
-    .then(async res => setCache ? (await setCache(res)).response : res);
+    .then((res) => handleApiError(res))
+    .then((res) => res.json())
+    .then(async (res) => (setCache ? (await setCache(res)).response : res));
 };
 
-useApi.get = <P extends object, R>(...args: ApiArguments<P, R>) => useApi<P, R>(ApiMethod.get, ...args);
+api.get = <P extends object, R>(...args: ApiArguments<P, R>) => api<P, R>(ApiMethod.get, ...args);
 
-useApi.post = <P extends object, R>(...args: ApiArguments<P, R>) => useApi<P, R>(ApiMethod.post, ...args);
+api.post = <P extends object, R>(...args: ApiArguments<P, R>) => api<P, R>(ApiMethod.post, ...args);
 
-useApi.put = <P extends object, R>(...args: ApiArguments<P, R>) => useApi<P, R>(ApiMethod.put, ...args);
+api.put = <P extends object, R>(...args: ApiArguments<P, R>) => api<P, R>(ApiMethod.put, ...args);
 
-useApi.delete = <P extends object, R>(...args: ApiArguments<P, R>) => useApi<P, R>(ApiMethod.delete, ...args);
-
+api.delete = <P extends object, R>(...args: ApiArguments<P, R>) =>
+  api<P, R>(ApiMethod.delete, ...args);
