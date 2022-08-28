@@ -53,7 +53,7 @@ export type ForecastCurrentConditions = {
 
 export type ForecastLocation = {
   stationContributions: null;
-  values: Array<ForecastLocationValue>;
+  values: ForecastLocationValue[];
   id: string;
   address: string;
   name: string;

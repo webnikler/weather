@@ -8,6 +8,7 @@ export const buildUrl = (base: string, params: object): string => {
   }
 };
 
-const buildQueryParamsString = <P>(params: P): string => Object.entries(params)
-  .map(([name, value]) => `${name}=${encodeURIComponent(value)}`)
-  .join('&');
+const buildQueryParamsString = <P>(params: P): string =>
+  Object.entries(params)
+    .map(([name, value]) => `${name}=${encodeURIComponent(value)}`)
+    .join('&');

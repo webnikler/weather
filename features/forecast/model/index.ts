@@ -19,7 +19,7 @@ export type ForecastItem = {
   time: string;
   // Исходное значение времени
   datetime: number;
-}
+};
 
 const formatDate = (dateTime: number, lang: string): string => {
   const date = new Date(dateTime);
@@ -28,16 +28,13 @@ const formatDate = (dateTime: number, lang: string): string => {
   const dayNumber = date.getDate();
 
   return `${dayName}, ${dayNumber} ${monthName}`;
-}
+};
 
 const formatTime = (dateTime: number): string => {
   const date = new Date(dateTime);
 
-  return [
-    formatTimeUnit(date.getHours()),
-    formatTimeUnit(date.getMinutes()),
-  ].join(':');
-}
+  return [formatTimeUnit(date.getHours()), formatTimeUnit(date.getMinutes())].join(':');
+};
 
 const parseForecastValue = (value: ForecastLocationValue, lang: string): ForecastItem => {
   return {
@@ -52,6 +49,9 @@ const parseForecastValue = (value: ForecastLocationValue, lang: string): Forecas
   };
 };
 
-export const getForecastItems = (forecastResponse: ForecastResponse, lang: string): ForecastItem[] => {
-  return forecastResponse.location.values.map(v => parseForecastValue(v, lang));
-}
+export const getForecastItems = (
+  forecastResponse: ForecastResponse,
+  lang: string
+): ForecastItem[] => {
+  return forecastResponse.location.values.map((v) => parseForecastValue(v, lang));
+};

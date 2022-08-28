@@ -4,7 +4,7 @@ export type CacheData<P, R> = {
   payload: P;
   response: R;
   updateTime: number;
-}
+};
 
 export type GetCacheReturnType<R> = Promise<R | null>;
 export type SetCacheReturnType<P, R> = Promise<CacheData<P, R>>;
@@ -12,11 +12,15 @@ export type SetCacheReturnType<P, R> = Promise<CacheData<P, R>>;
 export type CacheInstance<P, R> = {
   getCache: () => GetCacheReturnType<R>;
   setCache: (response: R) => SetCacheReturnType<P, R>;
-}
+};
 
 const DEFAULT_EXPIRATION_TIME = 60 * 1000;
 
-const getCache = async <P, R>(key: string, payload: P, expirationTime: number): GetCacheReturnType<R> => {
+const getCache = async <P, R>(
+  key: string,
+  payload: P,
+  expirationTime: number
+): GetCacheReturnType<R> => {
   const data: CacheData<P, R> = JSON.parse((await AsyncStorage.getItem(key)) as string);
 
   if (!data) {
@@ -44,9 +48,13 @@ const setCache = async <P, R>(key: string, payload: P, response: R): SetCacheRet
   return result;
 };
 
-export const buildCache = <P, R>(key: string, payload: P, expirationTime?: number): CacheInstance<P, R> => {
+export const buildCache = <P, R>(
+  key: string,
+  payload: P,
+  expirationTime?: number
+): CacheInstance<P, R> => {
   return {
     getCache: () => getCache<P, R>(key, payload, expirationTime ?? DEFAULT_EXPIRATION_TIME),
     setCache: (response: R) => setCache<P, R>(key, payload, response),
   };
-}
+};

@@ -14,10 +14,8 @@ export const getGeoPosition = async (): Promise<GeoPosition> => {
 
   const { coords } = await getCurrentGeoLocation();
 
-  return [
-    coords.latitude,
-    coords.longitude,
-  ];
-}
+  return [coords.latitude, coords.longitude];
+};
 
-getGeoPosition.string = async (): Promise<string> => getGeoPosition().then(position => position.join());
+getGeoPosition.string = async (): Promise<string> =>
+  getGeoPosition().then((position) => position.join());
