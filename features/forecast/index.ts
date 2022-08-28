@@ -14,11 +14,17 @@ const loadForecast = async (
 ): Promise<ForecastItem[]> => {
   const apiFn = view === ForecastView.day
     ?
+
     getForecast.day
+
+
     :
+
     getForecast.week
     ;
-  const response = await apiFn(payload);
+  const response = await apiFn(
+    payload
+  );
 
   return getForecastItems(response, payload.lang).slice(0, 7);
 };
