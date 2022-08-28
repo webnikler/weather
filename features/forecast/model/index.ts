@@ -1,5 +1,5 @@
-import { capitalize } from '@converters/capitalize';
-import { formatTimeUnit } from '@converters/format-time-unit';
+import { capitalize } from '@app/converters/capitalize';
+import { formatTimeUnit } from '@app/converters/format-time-unit';
 
 import { ForecastLocationValue, ForecastResponse } from '../types';
 

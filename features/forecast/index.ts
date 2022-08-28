@@ -1,4 +1,5 @@
-import { DataLoaderOptions, DataLoaderResult, useDataLoader } from '@hooks/data-loader';
+import { DataLoaderOptions, DataLoaderResult, useDataLoader } from '@app/hooks/data-loader';
+import { useEffect, useState } from 'react';
 
 import { getForecast } from './api';
 import { ForecastItem, getForecastItems } from './model';
@@ -29,4 +30,25 @@ export const useForecast = (
     [payload.unitGroup, payload.lang, payload.location, view],
     options
   );
+};
+
+export const useForecastLayout = (view: ForecastView) => {
+  const [topHeight, setTopHeight] = useState(0);
+  const [bottomHeight, setBottomHeight] = useState(0);
+
+  useEffect(() => {
+    switch (view) {
+      case ForecastView.day: {
+        setTopHeight(0);
+        setBottomHeight(210);
+        break;
+      }
+      case ForecastView.week: {
+        setTopHeight(360);
+        setBottomHeight(0);
+      }
+    }
+  }, [view]);
+
+  return [topHeight, bottomHeight];
 };

@@ -1,5 +1,5 @@
-import { api } from '@api';
-import { buildCache } from '@builders/cache';
+import { api } from '@app/api';
+import { buildCache } from '@app/builders/cache';
 import { WEATHER_API_TOKEN } from '@env';
 
 import { DaysForecastPayload, ForecastPayload, ForecastResponse } from '../types';
