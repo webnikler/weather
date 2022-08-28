@@ -1,8 +1,5 @@
-import {
-  DataLoaderOptions,
-  DataLoaderResult,
-  useDataLoader,
-} from '../../core/utils/hooks/data-loader';
+import { DataLoaderOptions, DataLoaderResult, useDataLoader } from '@hooks/data-loader';
+
 import { getForecast } from './api';
 import { ForecastItem, getForecastItems } from './model';
 import { DaysForecastPayload } from './types/payload';

@@ -1,7 +1,7 @@
+import { api } from '@api';
+import { buildCache } from '@builders/cache';
 import { WEATHER_API_TOKEN } from '@env';
 
-import { api } from '../../../core/api';
-import { buildCache } from '../../../core/utils/builders/cache';
 import { DaysForecastPayload, ForecastPayload, ForecastResponse } from '../types';
 
 const BASE_URL =

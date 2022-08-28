@@ -1,5 +1,6 @@
-import { capitalize } from '../../../core/utils/converters/capitalize';
-import { formatTimeUnit } from '../../../core/utils/converters/format-time-unit';
+import { capitalize } from '@converters/capitalize';
+import { formatTimeUnit } from '@converters/format-time-unit';
+
 import { ForecastLocationValue, ForecastResponse } from '../types';
 
 export type ForecastItem = {

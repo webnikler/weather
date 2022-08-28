@@ -1,3 +1,5 @@
+import { ForecastView, useForecast } from '@features/forecast';
+import { useCurrentPlace } from '@features/place';
 import {
   Text,
   NativeBaseProvider,
@@ -9,9 +11,6 @@ import {
   HStack,
 } from 'native-base';
 import React, { useState } from 'react';
-
-import { ForecastView, useForecast } from './features/forecast';
-import { useCurrentPlace } from './features/place';
 
 const App = (): JSX.Element => {
   const [unitGroup, setUnitGroup] = useState('metric');

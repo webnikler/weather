@@ -1,8 +1,8 @@
+import { api } from '@api';
+import { buildCache } from '@builders/cache';
+import { buildHeaders } from '@builders/headers';
 import { DADATA_API_TOKEN as token } from '@env';
 
-import { api } from '../../../core/api';
-import { buildCache } from '../../../core/utils/builders/cache';
-import { buildHeaders } from '../../../core/utils/builders/headers';
 import { AddressPayload, AddressResponse } from '../types';
 
 const ADDRESS_BASE_URL = 'https://suggestions.dadata.ru/suggestions/api/4_1/rs/geolocate/address';
