@@ -1,5 +1,8 @@
+import { MavenPro_700Bold, MavenPro_500Medium } from '@expo-google-fonts/maven-pro';
+import { OpenSans_600SemiBold } from '@expo-google-fonts/open-sans';
 import { ForecastView, useForecast } from '@features/forecast';
 import { useCurrentPlace } from '@features/place';
+import { useFonts } from 'expo-font';
 import {
   Text,
   NativeBaseProvider,
@@ -13,6 +16,12 @@ import {
 import React, { useState } from 'react';
 
 const App = (): JSX.Element => {
+  const [fontsLoaded] = useFonts({
+    MavenPro_700Bold,
+    MavenPro_500Medium,
+    OpenSans_600SemiBold,
+  });
+
   const [unitGroup, setUnitGroup] = useState('metric');
   const [lang, setLang] = useState('ru');
   const [view, setView] = useState(ForecastView.week);
@@ -24,7 +33,7 @@ const App = (): JSX.Element => {
     useForecastDepends,
     useForecastOptions
   );
-  const loading = [placeLoading, forecastLoading].some((loading) => loading);
+  const loading = [placeLoading, forecastLoading, !fontsLoaded].some((loading) => loading);
   const error = placeError || forecastError;
 
   const toggleView = () => setView((view) => +!view);
@@ -43,7 +52,9 @@ const App = (): JSX.Element => {
   const renderContent = (): JSX.Element => (
     <ScrollView padding={4}>
       <Box safeAreaTop={8} />
-      <Heading>Данные за {view === ForecastView.week ? '7 дней' : '7 часов'}</Heading>
+      <Heading fontFamily="MavenPro_700Bold">
+        Данные за {view === ForecastView.week ? '7 дней' : '7 часов'}
+      </Heading>
       <Text>Местоположениe: {placeData}</Text>
       {forecastList?.map((data) => (
         <Box
