@@ -1,0 +1,7 @@
+/.git
+/.vscode
+/.expo
+/.expo-shared
+ **/*.d.ts
+/assets/*
+/node_modules/*
