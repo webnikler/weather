@@ -1,6 +1,6 @@
-import { api } from '@api';
-import { buildCache } from '@builders/cache';
-import { buildHeaders } from '@builders/headers';
+import { api } from '@app/api';
+import { buildCache } from '@app/builders/cache';
+import { buildHeaders } from '@app/builders/headers';
 import { DADATA_API_TOKEN as token } from '@env';
 
 import { AddressPayload, AddressResponse } from '../types';

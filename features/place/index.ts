@@ -1,5 +1,5 @@
-import { getGeoPosition } from '@data/geo-position';
-import { DataLoaderResult, useDataLoader } from '@hooks/data-loader';
+import { getGeoPosition } from '@app/data/geo-position';
+import { DataLoaderResult, useDataLoader } from '@app/hooks/data-loader';
 
 import { getAddressByCoordinates } from './api';
 import { parseAddressToString } from './model';

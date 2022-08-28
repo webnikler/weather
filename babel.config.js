@@ -1,19 +1,24 @@
 module.exports = function (api) {
-  api.cache(true);
+  api.cache(false);
   return {
     presets: ['babel-preset-expo'],
     plugins: [
       'module:react-native-dotenv',
-      ["babel-plugin-module-resolver",
+      ["module-resolver",
         {
           "root": "./",
+          "extensiosn": [
+            ".ts",
+            ".tsx"
+          ],
           "alias": {
-            "@api": "./core/api",
-            "@builders": "./core/utils/builders",
-            "@converters": "./core/utils/converters",
-            "@data": "./core/utils/data",
-            "@hooks": "./core/utils/hooks",
-            "@features": "./features"
+            "@app/api": "./shared/api",
+            "@app/builders": "./shared/utils/builders",
+            "@app/converters": "./shared/utils/converters",
+            "@app/data": "./shared/utils/data",
+            "@app/hooks": "./shared/utils/hooks",
+            "@app/components": "./shared/components",
+            "@app/features": "./features"
           }
         }
       ]
