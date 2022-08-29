@@ -1,5 +1,5 @@
 import { ForecastView, useForecast } from '@features/forecast';
-import { AppCardHour } from '@features/forecast/ui/AppCardHour';
+import { ForecastMiniCard } from '@features/forecast/ui/ForecastMiniCard';
 import { useCurrentPlace } from '@features/place';
 import {
   Text,
@@ -10,18 +10,9 @@ import {
   Heading,
   Alert,
   HStack,
-  Spinner,
   Flex,
 } from 'native-base';
 import React, { useState } from 'react';
-
-//Добавил чтобы сработал градиент
-const LinearGradient = require('expo-linear-gradient').LinearGradient;
-const config = {
-  dependencies: {
-    'linear-gradient': LinearGradient,
-  },
-};
 
 const App = (): JSX.Element => {
   const [unitGroup, setUnitGroup] = useState('metric');
@@ -49,26 +40,19 @@ const App = (): JSX.Element => {
     </Alert>
   );
 
-  const renderLoading = (): JSX.Element => (
-    <Box
-      bg="primary.900"
-      style={{
-        flex: 1,
-        justifyContent: 'center',
-      }}>
-      <Spinner size="lg" accessibilityLabel="Loading posts" />
-    </Box>
-  );
-
   const renderContent = (): JSX.Element => (
     <ScrollView padding={4}>
       <Box safeAreaTop={8} />
 
       <Flex direction="row" justify="space-around">
-        {forecastList?.map((data, i) => {
-          if (i < 4) {
-            return <AppCardHour key={data.datetime} wet={data.humidity} time={data.time} />;
-          }
+        {forecastList?.slice(0, 4).map((data, i) => {
+          return (
+            <ForecastMiniCard
+              key={data.datetime}
+              topText={data.humidity + '%'}
+              bottomText={data.time}
+            />
+          );
         })}
       </Flex>
 
@@ -98,7 +82,7 @@ const App = (): JSX.Element => {
 
   const render = (): JSX.Element => {
     if (loading) {
-      return renderLoading();
+      // return renderLoading();
     } else if (error) {
       return renderError();
     } else {
@@ -106,7 +90,7 @@ const App = (): JSX.Element => {
     }
   };
 
-  return <NativeBaseProvider config={config}>{render()}</NativeBaseProvider>;
+  return <NativeBaseProvider>{render()}</NativeBaseProvider>;
 };
 
 export default App;
