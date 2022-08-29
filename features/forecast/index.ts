@@ -5,23 +5,23 @@ import { getForecast } from './api';
 import { ForecastItem, getForecastItems } from './model';
 import { DaysForecastPayload } from './types/payload';
 
-export enum ForecastView {
+export enum ForecastViewMode {
   day,
   week,
 }
 
 const loadForecast = async (
-  view: ForecastView,
+  view: ForecastViewMode,
   payload: DaysForecastPayload
 ): Promise<ForecastItem[]> => {
-  const apiFn = view === ForecastView.day ? getForecast.day : getForecast.week;
+  const apiFn = view === ForecastViewMode.day ? getForecast.day : getForecast.week;
   const response = await apiFn(payload);
 
   return getForecastItems(response, payload.lang).slice(0, 7);
 };
 
 export const useForecast = (
-  view: ForecastView,
+  view: ForecastViewMode,
   payload: DaysForecastPayload,
   options?: DataLoaderOptions
 ): DataLoaderResult<ForecastItem[]> => {
@@ -32,18 +32,18 @@ export const useForecast = (
   );
 };
 
-export const useForecastLayout = (view: ForecastView) => {
+export const useForecastLayout = (view: ForecastViewMode) => {
   const [topHeight, setTopHeight] = useState(0);
   const [bottomHeight, setBottomHeight] = useState(0);
 
   useEffect(() => {
     switch (view) {
-      case ForecastView.day: {
+      case ForecastViewMode.day: {
         setTopHeight(0);
         setBottomHeight(210);
         break;
       }
-      case ForecastView.week: {
+      case ForecastViewMode.week: {
         setTopHeight(360);
         setBottomHeight(0);
       }
