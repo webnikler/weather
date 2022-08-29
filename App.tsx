@@ -20,7 +20,6 @@ const App = (): JSX.Element => {
     OpenSans_600SemiBold,
   });
 
-  const [unitGroup, setUnitGroup] = useState('metric');
   const [lang, setLang] = useState('ru');
   const [placeLoading, place, placeError] = useCurrentPlace();
 
