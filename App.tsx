@@ -1,11 +1,11 @@
 import { AppLayout } from '@app/components';
 import { ForecastView, useForecast, useForecastLayout } from '@app/features/forecast';
+import { ForecastMiniCard } from '@app/features/forecast/ui';
 import { useCurrentPlace } from '@app/features/place';
 import { MavenPro_700Bold, MavenPro_500Medium } from '@expo-google-fonts/maven-pro';
 import { OpenSans_600SemiBold } from '@expo-google-fonts/open-sans';
 import { useFonts } from 'expo-font';
 import { LinearGradient } from 'expo-linear-gradient';
-import { ForecastMiniCard } from '@features/forecast/ui/ForecastMiniCard';
 import {
   Text,
   NativeBaseProvider,

@@ -15,7 +15,10 @@
     "prepare": "husky install"
   },
   "eslintConfig": {
-    "extends": "universe/native"
+    "extends": "universe/native",
+    "settings": {
+      "import/ignore": ["react-native"]
+    }
   },
   "dependencies": {
     "@expo-google-fonts/maven-pro": "^0.2.2",
@@ -25,6 +28,7 @@
     "expo-constants": "~13.0.1",
     "expo-file-system": "~13.1.4",
     "expo-font": "~10.0.4",
+    "expo-linear-gradient": "~11.0.3",
     "expo-location": "~14.0.1",
     "expo-splash-screen": "~0.14.1",
     "expo-status-bar": "~1.2.0",
@@ -34,8 +38,7 @@
     "react-native": "0.64.3",
     "react-native-safe-area-context": "3.3.2",
     "react-native-svg": "12.1.1",
-    "react-native-web": "0.17.1",
-    "expo-linear-gradient": "~11.0.3"
+    "react-native-web": "0.17.1"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
