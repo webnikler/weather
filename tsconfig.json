@@ -4,22 +4,25 @@
     "strict": true,
     "baseUrl": ".",
     "paths": {
-      "@api": [
-        "./core/api"
+      "@app/api": [
+        "./shared/api"
       ],
-      "@builders/*": [
-        "./core/utils/builders/*"
+      "@app/builders/*": [
+        "./shared/utils/builders/*"
       ],
-      "@converters/*": [
-        "./core/utils/converters/*"
+      "@app/converters/*": [
+        "./shared/utils/converters/*"
       ],
-      "@data/*": [
-        "./core/utils/data/*"
+      "@app/data/*": [
+        "./shared/utils/data/*"
       ],
-      "@hooks/*": [
-        "./core/utils/hooks/*"
+      "@app/hooks/*": [
+        "./shared/utils/hooks/*"
       ],
-      "@features/*": [
+      "@app/components": [
+        "./shared/components"
+      ],
+      "@app/features/*": [
         "./features/*"
       ]
     }

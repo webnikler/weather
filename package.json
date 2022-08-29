@@ -18,11 +18,15 @@
     "extends": "universe/native"
   },
   "dependencies": {
+    "@expo-google-fonts/maven-pro": "^0.2.2",
+    "@expo-google-fonts/open-sans": "^0.2.2",
     "@react-native-async-storage/async-storage": "~1.15.0",
     "expo": "^44.0.0",
     "expo-constants": "~13.0.1",
     "expo-file-system": "~13.1.4",
+    "expo-font": "~10.0.4",
     "expo-location": "~14.0.1",
+    "expo-splash-screen": "~0.14.1",
     "expo-status-bar": "~1.2.0",
     "native-base": "3.4.0",
     "react": "17.0.1",

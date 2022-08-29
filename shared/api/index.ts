@@ -1,6 +1,6 @@
-import { CacheInstance } from '@builders/cache';
-import { Headers } from '@builders/headers';
-import { buildUrl } from '@builders/url';
+import { CacheInstance } from '@app/builders/cache';
+import { Headers } from '@app/builders/headers';
+import { buildUrl } from '@app/builders/url';
 
 const enum ApiMethod {
   post = 'POST',
