@@ -1,5 +1,6 @@
 import { AppLayout } from '@app/components';
 import { ForecastView, useForecast, useForecastLayout } from '@app/features/forecast';
+import { ForecastMiniCard } from '@app/features/forecast/ui';
 import { useCurrentPlace } from '@app/features/place';
 import { MavenPro_700Bold, MavenPro_500Medium } from '@expo-google-fonts/maven-pro';
 import { OpenSans_600SemiBold } from '@expo-google-fonts/open-sans';
@@ -14,6 +15,7 @@ import {
   Heading,
   Alert,
   HStack,
+  Flex,
 } from 'native-base';
 import React, { useState } from 'react';
 
@@ -84,7 +86,19 @@ const App = (): JSX.Element => {
     };
 
     const renderBottomContent = (): JSX.Element => {
-      return <Text> 123</Text>;
+      return (
+        <Flex direction="row" justify="space-around">
+          {forecastList?.slice(0, 4).map((data, i) => {
+            return (
+              <ForecastMiniCard
+                key={data.datetime}
+                topText={data.humidity + '%'}
+                bottomText={data.time}
+              />
+            );
+          })}
+        </Flex>
+      );
     };
 
     return (
