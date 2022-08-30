@@ -36,20 +36,26 @@ export const AppLayout = ({
     });
   }, [topContentHeight, bottomContentHeight]);
 
+  console.log(topContentHeight, bottomContentHeight);
+
   return (
     <Box backgroundColor={MAIN_BG_COLOR} flex={1}>
       <VStack alignItems="center" flex={1}>
         <Box
           safeAreaTop
           width="100%"
-          flex={+!topContentHeight}
+          flex={topContentHeight ? null : 1}
           height={topContentHeight}
           bg={{ linearGradient: PRIMARY_GRADIENT }}
           borderRadius={16}
           borderTopRadius={0}>
           {renderTopContent()}
         </Box>
-        <Box safeAreaBottom width="100%" flex={+!bottomContentHeight} height={bottomContentHeight}>
+        <Box
+          safeAreaBottom
+          width="100%"
+          flex={bottomContentHeight ? null : 1}
+          height={bottomContentHeight}>
           {renderBottomContent()}
         </Box>
       </VStack>
