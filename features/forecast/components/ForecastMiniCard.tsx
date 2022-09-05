@@ -9,6 +9,7 @@ type ForecastMiniCardProps = {
   iconName: string;
   bottomText: string;
   isActive?: boolean;
+  packageDir: string;
 };
 
 export const ForecastMiniCard = ({
@@ -16,6 +17,7 @@ export const ForecastMiniCard = ({
   iconName,
   bottomText,
   isActive,
+  packageDir,
 }: ForecastMiniCardProps): JSX.Element => {
   const fontFamily = 'OpenSans_600SemiBold';
 
@@ -47,7 +49,7 @@ export const ForecastMiniCard = ({
       <Text color="lightText" fontFamily={fontFamily} fontSize={15}>
         {topText}
       </Text>
-      <AppIcon iconName={iconName} />
+      <AppIcon name={iconName} packageDir={packageDir} />
       <Text mt={2} fontSize={13} color="lightText" fontFamily={fontFamily}>
         {bottomText}
       </Text>
