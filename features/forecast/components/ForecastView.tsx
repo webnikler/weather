@@ -1,8 +1,8 @@
 import { AppLayout } from '@app/components';
 import { Text, Box } from 'native-base';
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 
-import { ForecastViewMode, useForecast, useForecastLayout } from '..';
+import { ForecastViewMode, useForecast } from '..';
 import { ForecastMiniCard } from './ForecastMiniCard';
 
 export type ForecastViewProps = {
@@ -13,7 +13,6 @@ export type ForecastViewProps = {
 export const ForecastView = ({ lang, location }: ForecastViewProps): JSX.Element => {
   const [unitGroup, setUnitGroup] = useState('metric');
   const [viewMode, setViewMode] = useState(ForecastViewMode.day);
-  const [layoutTopHeight, layoutBottomHeight] = useForecastLayout(viewMode);
   const useForecastDepends = { unitGroup, lang, location };
   const useForecastOptions = { skipEffect: !location };
   const [forecastLoading, forecastList, forecastError] = useForecast(
@@ -27,9 +26,8 @@ export const ForecastView = ({ lang, location }: ForecastViewProps): JSX.Element
     <Text>Error: {error?.message}</Text>
   );
 
-  const renderTopContent = () => {
+  const renderTopContent = useCallback(() => {
     return viewMode === ForecastViewMode.day ? (
-      // <Text>Top content for day view mode</Text>
       <Box flexDirection="row">
         <ForecastMiniCard bottomText="10:00" topText="24%" iconName="clear-day" />
         <ForecastMiniCard bottomText="10:00" topText="24%" iconName="clear-night" />
@@ -39,22 +37,20 @@ export const ForecastView = ({ lang, location }: ForecastViewProps): JSX.Element
     ) : (
       <Text>Top content for week view mode</Text>
     );
-  };
+  }, [viewMode]);
 
-  const renderBottomContent = () => {
+  const renderBottomContent = useCallback(() => {
     return viewMode === ForecastViewMode.day ? (
       <Text color="lightText">Bottom content for dat view mode</Text>
     ) : (
       <Text color="lightText">Bottom content for week view mode</Text>
     );
-  };
+  }, [viewMode]);
 
   const renderContent = () => (
     <AppLayout
       renderTopContent={() => renderTopContent()}
       renderBottomContent={() => renderBottomContent()}
-      topContentHeight={layoutTopHeight}
-      bottomContentHeight={layoutBottomHeight}
     />
   );
 
