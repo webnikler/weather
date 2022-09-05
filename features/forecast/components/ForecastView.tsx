@@ -1,8 +1,9 @@
 import { AppLayout } from '@app/components';
-import { Text } from 'native-base';
+import { Text, Box } from 'native-base';
 import React, { useState } from 'react';
 
 import { ForecastViewMode, useForecast, useForecastLayout } from '..';
+import { ForecastMiniCard } from './ForecastMiniCard';
 
 export type ForecastViewProps = {
   lang: string;
@@ -28,7 +29,13 @@ export const ForecastView = ({ lang, location }: ForecastViewProps): JSX.Element
 
   const renderTopContent = () => {
     return viewMode === ForecastViewMode.day ? (
-      <Text>Top content for dat view mode</Text>
+      // <Text>Top content for day view mode</Text>
+      <Box flexDirection="row">
+        <ForecastMiniCard bottomText="10:00" topText="24%" iconName="clear-day" />
+        <ForecastMiniCard bottomText="10:00" topText="24%" iconName="clear-night" />
+        <ForecastMiniCard bottomText="10:00" topText="24%" iconName="clear-night" isActive />
+        <ForecastMiniCard bottomText="10:00" topText="24%" iconName="clear-night" />
+      </Box>
     ) : (
       <Text>Top content for week view mode</Text>
     );
@@ -36,9 +43,9 @@ export const ForecastView = ({ lang, location }: ForecastViewProps): JSX.Element
 
   const renderBottomContent = () => {
     return viewMode === ForecastViewMode.day ? (
-      <Text>Bottom content for dat view mode</Text>
+      <Text color="lightText">Bottom content for dat view mode</Text>
     ) : (
-      <Text>Bottom content for week view mode</Text>
+      <Text color="lightText">Bottom content for week view mode</Text>
     );
   };
 

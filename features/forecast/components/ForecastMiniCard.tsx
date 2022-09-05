@@ -1,20 +1,23 @@
-import { Box, Text, MoonIcon } from 'native-base';
+import { AppIcon } from '@app/components';
+import { Box, Text } from 'native-base';
 import React from 'react';
 import { StyleProp, ViewStyle } from 'react-native';
 
 type ForecastMiniCardProps = {
   topText: string;
-  icon?: string;
+  iconName: string;
   bottomText: string;
   isActive?: boolean;
+  iconDir?: string;
 };
 
 export const ForecastMiniCard = ({
   topText,
-  icon,
+  iconName,
   bottomText,
   isActive,
-}: ForecastMiniCardProps) => {
+  iconDir = 'weather',
+}: ForecastMiniCardProps): JSX.Element => {
   const fontFamily = 'OpenSans_600SemiBold';
 
   const bgGradient = {
@@ -29,7 +32,7 @@ export const ForecastMiniCard = ({
     justifyContent: 'space-between',
     flexShrink: 1,
     alignItems: 'center',
-    height: 110,
+
     width: '100%',
     transform: [
       {
@@ -45,7 +48,7 @@ export const ForecastMiniCard = ({
       <Text color="lightText" fontFamily={fontFamily} fontSize={15}>
         {topText}
       </Text>
-      <MoonIcon size={8} color="lightText" />
+      <AppIcon name={iconName} dir={iconDir} />
       <Text mt={2} fontSize={13} color="lightText" fontFamily={fontFamily}>
         {bottomText}
       </Text>
