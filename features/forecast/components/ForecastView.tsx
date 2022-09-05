@@ -31,30 +31,25 @@ export const ForecastView = ({ lang, location }: ForecastViewProps): JSX.Element
     return viewMode === ForecastViewMode.day ? (
       // <Text>Top content for day view mode</Text>
       <Box flexDirection="row">
+        <ForecastMiniCard bottomText="10:00" topText="24%" iconName="clear-day" iconDir="weather" />
         <ForecastMiniCard
           bottomText="10:00"
           topText="24%"
-          iconName="clear-day"
-          packageDir="weather"
+          iconName="clear-night"
+          iconDir="weather"
         />
         <ForecastMiniCard
           bottomText="10:00"
           topText="24%"
           iconName="clear-night"
-          packageDir="weather"
-        />
-        <ForecastMiniCard
-          bottomText="10:00"
-          topText="24%"
-          iconName="clear-night"
-          packageDir="weather"
+          iconDir="weather"
           isActive
         />
         <ForecastMiniCard
           bottomText="10:00"
           topText="24%"
           iconName="clear-night"
-          packageDir="weather"
+          iconDir="weather"
         />
       </Box>
     ) : (

@@ -1,15 +1,14 @@
+import { AppIcon } from '@app/components';
 import { Box, Text } from 'native-base';
 import React from 'react';
 import { StyleProp, ViewStyle } from 'react-native';
-
-import { AppIcon } from '../../../shared/components/AppIcon';
 
 type ForecastMiniCardProps = {
   topText: string;
   iconName: string;
   bottomText: string;
   isActive?: boolean;
-  packageDir: string;
+  iconDir: string;
 };
 
 export const ForecastMiniCard = ({
@@ -17,7 +16,7 @@ export const ForecastMiniCard = ({
   iconName,
   bottomText,
   isActive,
-  packageDir,
+  iconDir,
 }: ForecastMiniCardProps): JSX.Element => {
   const fontFamily = 'OpenSans_600SemiBold';
 
@@ -49,7 +48,7 @@ export const ForecastMiniCard = ({
       <Text color="lightText" fontFamily={fontFamily} fontSize={15}>
         {topText}
       </Text>
-      <AppIcon name={iconName} packageDir={packageDir} />
+      <AppIcon name={iconName} dir={iconDir} />
       <Text mt={2} fontSize={13} color="lightText" fontFamily={fontFamily}>
         {bottomText}
       </Text>

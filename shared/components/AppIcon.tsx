@@ -79,9 +79,9 @@ const iconSources: ImageSources = {
 
 type AppIconProps = {
   name: string;
-  packageDir: string;
+  dir: string;
 };
 
-export const AppIcon = ({ name, packageDir }: AppIconProps): JSX.Element => {
-  return <Image source={iconSources[packageDir][name].source} alt={name} />;
+export const AppIcon = ({ name, dir }: AppIconProps): JSX.Element => {
+  return <Image source={iconSources[dir][name].source} alt={name} />;
 };
