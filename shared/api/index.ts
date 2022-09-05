@@ -34,7 +34,7 @@ export const api = async <P extends object, R>(
   options: ApiOptions<P, R>
 ): Promise<R> => {
   const { getCache, setCache } = options?.cache ?? {};
-  const cache = getCache && (await getCache());
+  const cache = await getCache?.();
   const headers = options?.headers ?? {};
 
   let url: string = base,

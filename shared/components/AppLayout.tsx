@@ -36,8 +36,6 @@ export const AppLayout = ({
     });
   }, [topContentHeight, bottomContentHeight]);
 
-  console.log(topContentHeight, bottomContentHeight);
-
   return (
     <Box backgroundColor={MAIN_BG_COLOR} flex={1}>
       <VStack alignItems="center" flex={1}>
