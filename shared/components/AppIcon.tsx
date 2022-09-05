@@ -2,11 +2,11 @@ import { Image } from 'native-base';
 import React from 'react';
 import { ImageSourcePropType } from 'react-native';
 
-type ImageSources = {
+type IconSources = {
   [key: string]: { [key: string]: { source: ImageSourcePropType } };
 };
 
-const iconSources: ImageSources = {
+const iconSources: IconSources = {
   weather: {
     'clear-day': {
       source: require('assets/icons/weather/clear-day.png'),
