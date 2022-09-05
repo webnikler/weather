@@ -2,11 +2,9 @@ import { Box, VStack } from 'native-base';
 import { useEffect } from 'react';
 import { LayoutAnimation } from 'react-native';
 
-export type AppLayotProps = {
+export type AppLayoutProps = {
   renderTopContent: () => JSX.Element;
   renderBottomContent: () => JSX.Element;
-  topContentHeight?: number;
-  bottomContentHeight?: number;
 };
 
 const MAIN_BG_COLOR = '#0c0926';
@@ -23,9 +21,7 @@ const PRIMARY_GRADIENT = {
 export const AppLayout = ({
   renderTopContent,
   renderBottomContent,
-  topContentHeight,
-  bottomContentHeight,
-}: AppLayotProps): JSX.Element => {
+}: AppLayoutProps): JSX.Element => {
   useEffect(() => {
     LayoutAnimation.configureNext({
       duration: ANIMATION_DURATION,
@@ -34,7 +30,7 @@ export const AppLayout = ({
         property: LayoutAnimation.Properties.scaleY,
       },
     });
-  }, [topContentHeight, bottomContentHeight]);
+  }, [renderTopContent, renderBottomContent]);
 
   return (
     <Box backgroundColor={MAIN_BG_COLOR} flex={1}>
@@ -42,18 +38,12 @@ export const AppLayout = ({
         <Box
           safeAreaTop
           width="100%"
-          flex={topContentHeight ? null : 1}
-          height={topContentHeight}
           bg={{ linearGradient: PRIMARY_GRADIENT }}
           borderRadius={16}
           borderTopRadius={0}>
           {renderTopContent()}
         </Box>
-        <Box
-          safeAreaBottom
-          width="100%"
-          flex={bottomContentHeight ? null : 1}
-          height={bottomContentHeight}>
+        <Box safeAreaBottom width="100%">
           {renderBottomContent()}
         </Box>
       </VStack>
