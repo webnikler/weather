@@ -48,7 +48,7 @@ export const ForecastMiniCard = ({
       <Text color="lightText" fontFamily={fontFamily} fontSize={15}>
         {topText}
       </Text>
-      <AppIcon name={iconName} iconDir={iconDir} />
+      <AppIcon name={iconName} dir={iconDir} />
       <Text mt={2} fontSize={13} color="lightText" fontFamily={fontFamily}>
         {bottomText}
       </Text>
