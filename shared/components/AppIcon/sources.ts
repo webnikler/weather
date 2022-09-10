@@ -1,12 +1,10 @@
-import { Image } from 'native-base';
-import React from 'react';
 import { ImageSourcePropType } from 'react-native';
 
-type IconSources = {
+export type IconSources = {
   [key: string]: { [key: string]: { source: ImageSourcePropType } };
 };
 
-const iconSources: IconSources = {
+export const iconSources: IconSources = {
   weather: {
     'clear-day': {
       source: require('assets/icons/weather/clear-day.png'),
@@ -107,14 +105,4 @@ const iconSources: IconSources = {
       source: require('assets/icons/main/wind.png'),
     },
   },
-};
-
-type AppIconProps = {
-  name: string;
-  dir: string;
-  size?: number;
-};
-
-export const AppIcon = ({ name, dir, size }: AppIconProps): JSX.Element => {
-  return <Image source={iconSources[dir][name].source} alt={name} width={size} height={size} />;
 };
