@@ -75,6 +75,38 @@ const iconSources: IconSources = {
       source: require('assets/icons/weather/wind.png'),
     },
   },
+  main: {
+    back: {
+      source: require('assets/icons/main/back.png'),
+    },
+    calendar: {
+      source: require('assets/icons/main/calendar.png'),
+    },
+    fahrenheit: {
+      source: require('assets/icons/main/fahrenheit.png'),
+    },
+    forward: {
+      source: require('assets/icons/main/forward.png'),
+    },
+    geo: {
+      source: require('assets/icons/main/geo.png'),
+    },
+    humidity: {
+      source: require('assets/icons/main/humidity.png'),
+    },
+    loading: {
+      source: require('assets/icons/main/loading.png'),
+    },
+    menu: {
+      source: require('assets/icons/main/menu.png'),
+    },
+    rain: {
+      source: require('assets/icons/main/rain.png'),
+    },
+    wind: {
+      source: require('assets/icons/main/wind.png'),
+    },
+  },
 };
 
 type AppIconProps = {
