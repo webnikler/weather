@@ -15,10 +15,9 @@ export const ForecastDaysList = ({ data }: ForecastDaysListProps): JSX.Element |
         <Text
           numberOfLines={1}
           ellipsizeMode="tail"
-          fontWeight="600"
+          fontFamily="MavenPro_700Bold"
           color="lightText"
           fontSize="15"
-          lineHeight="27"
           width="30%">
           {item.dayName}
         </Text>
@@ -29,9 +28,8 @@ export const ForecastDaysList = ({ data }: ForecastDaysListProps): JSX.Element |
             ellipsizeMode="tail"
             color="lightText"
             width="60%"
-            fontSize="10"
-            fontWeight="500"
-            lineHeight="19"
+            fontSize="13"
+            fontFamily="MavenPro_500Medium"
             paddingLeft={2}>
             {item.description}
           </Text>
