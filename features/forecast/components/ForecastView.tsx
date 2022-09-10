@@ -4,6 +4,7 @@ import React, { useCallback, useState } from 'react';
 
 import { ForecastViewMode, useForecast } from '..';
 import { ForecastMiniCard } from './ForecastMiniCard';
+import { ForecastValuesLine } from './ForecastValuesLine';
 
 export type ForecastViewProps = {
   lang: string;
@@ -36,11 +37,16 @@ export const ForecastView = ({ lang, location }: ForecastViewProps): JSX.Element
           <ForecastMiniCard bottomText="10:00" topText="24%" iconName="clear-night" isActive />
           <ForecastMiniCard bottomText="10:00" topText="24%" iconName="clear-night" />
         </Box>
+        <ForecastValuesLine
+          wind={forecastList?.[0].windSpeed}
+          humidity={forecastList?.[0].humidity}
+          rainChance={forecastList?.[0].rainChance}
+        />
       </>
     ) : (
       <Text>Top content for week view mode</Text>
     );
-  }, [viewMode]);
+  }, [viewMode, forecastList]);
 
   const renderBottomContent = useCallback(() => {
     return viewMode === ForecastViewMode.day ? (
