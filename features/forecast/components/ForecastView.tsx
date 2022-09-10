@@ -3,6 +3,7 @@ import { Text, Box } from 'native-base';
 import React, { useCallback, useState } from 'react';
 
 import { ForecastViewMode, useForecast } from '..';
+import { ForecastDaysList } from './ForecastDaysList';
 import { ForecastMiniCard } from './ForecastMiniCard';
 import { ForecastValuesLine } from './ForecastValuesLine';
 
@@ -13,7 +14,7 @@ export type ForecastViewProps = {
 
 export const ForecastView = ({ lang, location }: ForecastViewProps): JSX.Element => {
   const [unitGroup, setUnitGroup] = useState('metric');
-  const [viewMode, setViewMode] = useState(ForecastViewMode.day);
+  const [viewMode, setViewMode] = useState(ForecastViewMode.week);
   const useForecastDepends = { unitGroup, lang, location };
   const useForecastOptions = { skipEffect: !location };
   const [forecastLoading, forecastList, forecastError] = useForecast(
@@ -52,9 +53,10 @@ export const ForecastView = ({ lang, location }: ForecastViewProps): JSX.Element
     return viewMode === ForecastViewMode.day ? (
       <Text color="lightText">Bottom content for dat view mode</Text>
     ) : (
-      <Text color="lightText">Bottom content for week view mode</Text>
+      // <Text color="lightText">Bottom content for week view mode</Text>
+      <ForecastDaysList data={forecastList!} />
     );
-  }, [viewMode]);
+  }, [viewMode, forecastList]);
 
   const renderContent = () => (
     <AppLayout

@@ -20,15 +20,23 @@ export type ForecastItem = {
   time: string;
   // Исходное значение времени
   datetime: number;
+  // Имя иконки из папки assets/icons/weather
+  icon: string;
+  // Имя дня недели
+  dayName: string;
 };
 
 const formatDate = (dateTime: number, lang: string): string => {
   const date = new Date(dateTime);
-  const dayName = capitalize(date.toLocaleString(lang, { weekday: 'long' }));
+  const dayName = getDayName(dateTime, lang);
   const monthName = capitalize(date.toLocaleString(lang, { month: 'long' }));
   const dayNumber = date.getDate();
 
   return `${dayName}, ${dayNumber} ${monthName}`;
+};
+
+const getDayName = (dateTime: number, lang: string): string => {
+  return capitalize(new Date(dateTime).toLocaleString(lang, { weekday: 'long' }));
 };
 
 const formatTime = (dateTime: number): string => {
@@ -39,7 +47,7 @@ const formatTime = (dateTime: number): string => {
 
 const parseForecastValue = (value: ForecastLocationValue, lang: string): ForecastItem => {
   return {
-    temperature: value.temp,
+    temperature: Math.round(value.temp),
     description: value.conditions,
     date: formatDate(value.datetime, lang),
     windSpeed: value.wspd,
@@ -47,6 +55,8 @@ const parseForecastValue = (value: ForecastLocationValue, lang: string): Forecas
     rainChance: value.pop,
     time: formatTime(value.datetime),
     datetime: value.datetime,
+    icon: value.icon,
+    dayName: getDayName(value.datetime, lang),
   };
 };
 

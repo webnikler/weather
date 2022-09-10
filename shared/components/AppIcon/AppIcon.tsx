@@ -6,13 +6,20 @@ import { iconSources } from './sources';
 type AppIconProps = {
   name: string;
   dir: string;
+  size?: number;
   onPress?: () => void;
 } & IImageProps;
 
-export const AppIcon = ({ name, dir, onPress, ...imageProps }: AppIconProps): JSX.Element => {
+export const AppIcon = ({ name, dir, size, onPress, ...imageProps }: AppIconProps): JSX.Element => {
   return (
     <Pressable onPress={onPress}>
-      <Image {...imageProps} source={iconSources[dir][name].source} alt={name} />
+      <Image
+        width={size}
+        height={size}
+        {...imageProps}
+        source={iconSources[dir][name].source}
+        alt={name}
+      />
     </Pressable>
   );
 };
