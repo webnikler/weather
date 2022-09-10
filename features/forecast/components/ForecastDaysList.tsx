@@ -10,7 +10,7 @@ type ForecastDaysListProps = {
 
 export const ForecastDaysList = ({ data }: ForecastDaysListProps): JSX.Element | null => {
   const renderItem = ({ item }: ListRenderItemInfo<ForecastItem>): JSX.Element => (
-    <Box pl={['0', '4']} pr={['0', '5']} py="2">
+    <Box py={4}>
       <HStack alignItems="center">
         <Text
           numberOfLines={1}
@@ -34,7 +34,7 @@ export const ForecastDaysList = ({ data }: ForecastDaysListProps): JSX.Element |
             {item.description}
           </Text>
         </Box>
-        <Text fontWeight="600" color="lightText" fontSize="17" lineHeight="24">
+        <Text fontFamily="OpenSans_600SemiBold" color="lightText" fontSize="17">
           {item.temperature}°
         </Text>
       </HStack>
@@ -49,7 +49,6 @@ export const ForecastDaysList = ({ data }: ForecastDaysListProps): JSX.Element |
         keyExtractor={(item) => item.datetime.toString()}
         paddingLeft={28}
         paddingRight={28}
-        paddingTop={4}
       />
     );
   } else {
