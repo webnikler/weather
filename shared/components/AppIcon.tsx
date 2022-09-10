@@ -112,8 +112,9 @@ const iconSources: IconSources = {
 type AppIconProps = {
   name: string;
   dir: string;
+  size?: number;
 };
 
-export const AppIcon = ({ name, dir }: AppIconProps): JSX.Element => {
-  return <Image source={iconSources[dir][name].source} alt={name} />;
+export const AppIcon = ({ name, dir, size }: AppIconProps): JSX.Element => {
+  return <Image source={iconSources[dir][name].source} alt={name} width={size} height={size} />;
 };
