@@ -41,17 +41,15 @@ export const ForecastDaysList = ({ data }: ForecastDaysListProps): JSX.Element |
     </Box>
   );
 
-  if (data) {
-    return (
-      <FlatList
-        data={data}
-        renderItem={renderItem}
-        keyExtractor={(item) => item.datetime.toString()}
-        paddingLeft={28}
-        paddingRight={28}
-      />
-    );
-  } else {
-    return null;
-  }
+  if (!data) return null;
+
+  return (
+    <FlatList
+      data={data}
+      renderItem={renderItem}
+      keyExtractor={(item) => item.datetime.toString()}
+      paddingLeft={28}
+      paddingRight={28}
+    />
+  );
 };
