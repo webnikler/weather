@@ -1,4 +1,4 @@
-import { AppLayout } from '@app/components';
+import { AppLayout, TobBar } from '@app/components';
 import { Text, Box } from 'native-base';
 import React, { useCallback, useState } from 'react';
 
@@ -28,12 +28,15 @@ export const ForecastView = ({ lang, location }: ForecastViewProps): JSX.Element
 
   const renderTopContent = useCallback(() => {
     return viewMode === ForecastViewMode.day ? (
-      <Box flexDirection="row">
-        <ForecastMiniCard bottomText="10:00" topText="24%" iconName="clear-day" />
-        <ForecastMiniCard bottomText="10:00" topText="24%" iconName="clear-night" />
-        <ForecastMiniCard bottomText="10:00" topText="24%" iconName="clear-night" isActive />
-        <ForecastMiniCard bottomText="10:00" topText="24%" iconName="clear-night" />
-      </Box>
+      <>
+        <TobBar leftIconName="fahrenheit" centerIconName="calendar" centerText="7 Days" />
+        <Box flexDirection="row">
+          <ForecastMiniCard bottomText="10:00" topText="24%" iconName="clear-day" />
+          <ForecastMiniCard bottomText="10:00" topText="24%" iconName="clear-night" />
+          <ForecastMiniCard bottomText="10:00" topText="24%" iconName="clear-night" isActive />
+          <ForecastMiniCard bottomText="10:00" topText="24%" iconName="clear-night" />
+        </Box>
+      </>
     ) : (
       <Text>Top content for week view mode</Text>
     );
