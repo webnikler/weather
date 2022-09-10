@@ -25,7 +25,7 @@ export const ForecastValuesLine = ({
     const fontFamily = 'OpenSans_600SemiBold';
 
     return (
-      <Box alignItems="center" flex={1}>
+      <Box alignItems="center" flex={1} key={description}>
         <AppIcon name={iconName} dir="main" />
         <Text color={color} fontFamily={fontFamily}>
           {value}
