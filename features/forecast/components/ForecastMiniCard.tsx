@@ -9,10 +9,12 @@ type ForecastMiniCardProps = {
   bottomText: string;
   isActive?: boolean;
   iconDir?: string;
+  width?: number | string;
 };
 
 export const ForecastMiniCard = ({
   topText,
+  width,
   iconName,
   bottomText,
   isActive,
@@ -30,10 +32,8 @@ export const ForecastMiniCard = ({
 
   const boxStyle: StyleProp<ViewStyle> = {
     justifyContent: 'space-between',
-    flexShrink: 1,
     alignItems: 'center',
-
-    width: '100%',
+    // width: "125%",
     transform: [
       {
         scale: isActive ? 1.1 : 1,
@@ -44,7 +44,15 @@ export const ForecastMiniCard = ({
   const bgCard = isActive ? bgGradient : '#2352CB';
 
   return (
-    <Box bg={bgCard} pt={1} paddingX={4} pb={3} rounded={33} style={boxStyle}>
+    <Box
+      flex={0.5}
+      width={width}
+      bg={bgCard}
+      pt={1}
+      paddingX={4}
+      pb={3}
+      rounded={33}
+      style={boxStyle}>
       <Text color="lightText" fontFamily={fontFamily} fontSize={15}>
         {topText}
       </Text>

@@ -20,6 +20,8 @@ export type ForecastItem = {
   time: string;
   // Исходное значение времени
   datetime: number;
+  //
+  icon: string;
 };
 
 const formatDate = (dateTime: number, lang: string): string => {
@@ -47,6 +49,7 @@ const parseForecastValue = (value: ForecastLocationValue, lang: string): Forecas
     rainChance: value.pop,
     time: formatTime(value.datetime),
     datetime: value.datetime,
+    icon: value.icon,
   };
 };
 

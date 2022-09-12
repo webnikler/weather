@@ -1,6 +1,6 @@
 import { Image } from 'native-base';
 import React from 'react';
-import { ImageSourcePropType } from 'react-native';
+import { ImageSourcePropType, StyleSheet } from 'react-native';
 
 type IconSources = {
   [key: string]: { [key: string]: { source: ImageSourcePropType } };
@@ -83,5 +83,5 @@ type AppIconProps = {
 };
 
 export const AppIcon = ({ name, dir }: AppIconProps): JSX.Element => {
-  return <Image source={iconSources[dir][name].source} alt={name} />;
+  return <Image resizeMode="contain" size={50} source={iconSources[dir][name].source} alt={name} />;
 };
