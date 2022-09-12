@@ -4,6 +4,7 @@ import React, { useCallback, useState } from 'react';
 
 import { ForecastViewMode, useForecast } from '..';
 import { ForecastDaysList } from './ForecastDaysList';
+import { ForecastHoursList } from './ForecastHoursList';
 import { ForecastMiniCard } from './ForecastMiniCard';
 import { ForecastValuesLine } from './ForecastValuesLine';
 
@@ -14,7 +15,7 @@ export type ForecastViewProps = {
 
 export const ForecastView = ({ lang, location }: ForecastViewProps): JSX.Element => {
   const [unitGroup, setUnitGroup] = useState('metric');
-  const [viewMode, setViewMode] = useState(ForecastViewMode.week);
+  const [viewMode, setViewMode] = useState(ForecastViewMode.day);
   const useForecastDepends = { unitGroup, lang, location };
   const useForecastOptions = { skipEffect: !location };
   const [forecastLoading, forecastList, forecastError] = useForecast(
@@ -28,7 +29,7 @@ export const ForecastView = ({ lang, location }: ForecastViewProps): JSX.Element
     <Text>Error: {error?.message}</Text>
   );
 
-  const renderTopContent = useCallback(() => {
+  const renderTopContent = useCallback((): JSX.Element => {
     return viewMode === ForecastViewMode.day ? (
       <>
         <TobBar leftIconName="fahrenheit" centerIconName="calendar" centerText="7 Days" />
@@ -51,7 +52,7 @@ export const ForecastView = ({ lang, location }: ForecastViewProps): JSX.Element
 
   const renderBottomContent = useCallback(() => {
     return viewMode === ForecastViewMode.day ? (
-      <Text color="lightText">Bottom content for dat view mode</Text>
+      <ForecastHoursList data={forecastList!} />
     ) : (
       // <Text color="lightText">Bottom content for week view mode</Text>
       <ForecastDaysList data={forecastList!} />
