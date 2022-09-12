@@ -5,31 +5,33 @@ import { ListRenderItemInfo, Dimensions } from 'react-native';
 import { ForecastItem } from '../model';
 import { ForecastMiniCard } from './ForecastMiniCard';
 
-type ForecastHoursList = {
+type ForecastHoursListProps = {
   data: ForecastItem[];
 };
 
-export const ForecastHoursList = ({ data }: ForecastHoursList): JSX.Element | null => {
+export const ForecastHoursList = ({ data }: ForecastHoursListProps): JSX.Element | null => {
   if (!data) {
     return null;
   }
 
+  const fontFamily = 'OpenSans_600SemiBold';
+  const textColor = 'lightText';
   const marginDisplay = 25;
   const contentWidth = Dimensions.get('window').width - marginDisplay * 2;
-  const separated = 10;
-  const countCard = 4;
-  const widthCard = (contentWidth - separated * (countCard - 1)) / countCard;
+  const separatorWidth = 10;
+  const cardsCount = 4;
+  const widthCard = (contentWidth - separatorWidth * (cardsCount - 1)) / cardsCount;
 
   const renderTopPanel = (): JSX.Element => {
     return (
       <Flex direction="row" justify="space-between" marginX={15} align="center">
-        <Text fontSize={24} bold color="lightText">
+        <Text fontSize={24} bold color={textColor} fontFamily={fontFamily}>
           Today
         </Text>
         <Button
           variant="link"
-          _text={{ color: 'lightText', fontSize: 16 }}
-          endIcon={<ChevronRightIcon color="lightText" />}>
+          _text={{ color: textColor, fontSize: 16, fontFamily }}
+          endIcon={<ChevronRightIcon color={textColor} />}>
           7 days
         </Button>
       </Flex>
@@ -37,7 +39,7 @@ export const ForecastHoursList = ({ data }: ForecastHoursList): JSX.Element | nu
   };
 
   const renderSeparator = () => {
-    return <View style={{ height: '100%', width: separated }} />;
+    return <View style={{ height: '100%', width: separatorWidth }} />;
   };
 
   const renderCardsList = (): JSX.Element => {
@@ -51,6 +53,7 @@ export const ForecastHoursList = ({ data }: ForecastHoursList): JSX.Element | nu
         />
       );
     };
+
     return (
       <View marginX={marginDisplay}>
         <FlatList

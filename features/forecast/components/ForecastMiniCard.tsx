@@ -33,7 +33,6 @@ export const ForecastMiniCard = ({
   const boxStyle: StyleProp<ViewStyle> = {
     justifyContent: 'space-between',
     alignItems: 'center',
-    // width: "125%",
     transform: [
       {
         scale: isActive ? 1.1 : 1,

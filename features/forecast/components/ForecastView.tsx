@@ -15,7 +15,7 @@ export type ForecastViewProps = {
 
 export const ForecastView = ({ lang, location }: ForecastViewProps): JSX.Element => {
   const [unitGroup, setUnitGroup] = useState('metric');
-  const [viewMode, setViewMode] = useState(ForecastViewMode.week);
+  const [viewMode, setViewMode] = useState(ForecastViewMode.day);
   const useForecastDepends = { unitGroup, lang, location };
   const useForecastOptions = { skipEffect: !location };
   const [forecastLoading, forecastList, forecastError] = useForecast(
