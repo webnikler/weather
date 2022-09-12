@@ -1,9 +1,12 @@
-import { AppLayout } from '@app/components';
+import { AppLayout, TobBar } from '@app/components';
 import { Text, Box } from 'native-base';
 import React, { useCallback, useState } from 'react';
 
 import { ForecastViewMode, useForecast } from '..';
+import { ForecastDaysList } from './ForecastDaysList';
 import { ForecastHoursList } from './ForecastHoursList';
+import { ForecastMiniCard } from './ForecastMiniCard';
+import { ForecastValuesLine } from './ForecastValuesLine';
 
 export type ForecastViewProps = {
   lang: string;
@@ -12,7 +15,7 @@ export type ForecastViewProps = {
 
 export const ForecastView = ({ lang, location }: ForecastViewProps): JSX.Element => {
   const [unitGroup, setUnitGroup] = useState('metric');
-  const [viewMode, setViewMode] = useState(ForecastViewMode.day);
+  const [viewMode, setViewMode] = useState(ForecastViewMode.week);
   const useForecastDepends = { unitGroup, lang, location };
   const useForecastOptions = { skipEffect: !location };
   const [forecastLoading, forecastList, forecastError] = useForecast(
@@ -26,19 +29,33 @@ export const ForecastView = ({ lang, location }: ForecastViewProps): JSX.Element
     <Text>Error: {error?.message}</Text>
   );
 
-  const renderTopContent = useCallback(() => {
+  const renderTopContent = useCallback((): JSX.Element => {
     return viewMode === ForecastViewMode.day ? (
-      <Text>Top content for day view mode</Text>
+      <>
+        <TobBar leftIconName="fahrenheit" centerIconName="calendar" centerText="7 Days" />
+        <Box flexDirection="row">
+          <ForecastMiniCard bottomText="10:00" topText="24%" iconName="clear-day" />
+          <ForecastMiniCard bottomText="10:00" topText="24%" iconName="clear-night" />
+          <ForecastMiniCard bottomText="10:00" topText="24%" iconName="clear-night" isActive />
+          <ForecastMiniCard bottomText="10:00" topText="24%" iconName="clear-night" />
+        </Box>
+        <ForecastValuesLine
+          wind={forecastList?.[0].windSpeed}
+          humidity={forecastList?.[0].humidity}
+          rainChance={forecastList?.[0].rainChance}
+        />
+      </>
     ) : (
       <Text>Top content for week view mode</Text>
     );
-  }, [viewMode]);
+  }, [viewMode, forecastList]);
 
   const renderBottomContent = useCallback(() => {
     return viewMode === ForecastViewMode.day ? (
       <ForecastHoursList data={forecastList!} />
     ) : (
-      <Text color="lightText">Bottom content for week view mode</Text>
+      // <Text color="lightText">Bottom content for week view mode</Text>
+      <ForecastDaysList data={forecastList!} />
     );
   }, [viewMode, forecastList]);
 

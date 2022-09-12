@@ -16,7 +16,7 @@ const loadForecast = async (
   const apiFn = view === ForecastViewMode.day ? getForecast.day : getForecast.week;
   const response = await apiFn(payload);
 
-  return getForecastItems(response, payload.lang).slice(0, 7);
+  return getForecastItems(response, payload.lang);
 };
 
 export const useForecast = (

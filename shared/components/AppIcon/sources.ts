@@ -1,12 +1,10 @@
-import { Image } from 'native-base';
-import React from 'react';
-import { ImageSourcePropType, StyleSheet } from 'react-native';
+import { ImageSourcePropType } from 'react-native';
 
-type IconSources = {
+export type IconSources = {
   [key: string]: { [key: string]: { source: ImageSourcePropType } };
 };
 
-const iconSources: IconSources = {
+export const iconSources: IconSources = {
   weather: {
     'clear-day': {
       source: require('assets/icons/weather/clear-day.png'),
@@ -75,13 +73,36 @@ const iconSources: IconSources = {
       source: require('assets/icons/weather/wind.png'),
     },
   },
-};
-
-type AppIconProps = {
-  name: string;
-  dir: string;
-};
-
-export const AppIcon = ({ name, dir }: AppIconProps): JSX.Element => {
-  return <Image resizeMode="contain" size={50} source={iconSources[dir][name].source} alt={name} />;
+  main: {
+    back: {
+      source: require('assets/icons/main/back.png'),
+    },
+    calendar: {
+      source: require('assets/icons/main/calendar.png'),
+    },
+    fahrenheit: {
+      source: require('assets/icons/main/fahrenheit.png'),
+    },
+    forward: {
+      source: require('assets/icons/main/forward.png'),
+    },
+    geo: {
+      source: require('assets/icons/main/geo.png'),
+    },
+    humidity: {
+      source: require('assets/icons/main/humidity.png'),
+    },
+    loading: {
+      source: require('assets/icons/main/loading.png'),
+    },
+    menu: {
+      source: require('assets/icons/main/menu.png'),
+    },
+    rain: {
+      source: require('assets/icons/main/rain.png'),
+    },
+    wind: {
+      source: require('assets/icons/main/wind.png'),
+    },
+  },
 };

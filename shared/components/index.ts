@@ -1,2 +1,3 @@
 export * from './AppLayout';
-export * from './AppIcon';
+export * from './AppIcon/AppIcon';
+export * from './TopBar';
