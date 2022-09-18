@@ -3,6 +3,7 @@ import { Text, Box } from 'native-base';
 import React, { useCallback, useState } from 'react';
 
 import { ForecastViewMode, useForecast } from '..';
+import { ForecastDay } from './ForecastDay';
 import { ForecastDaysList } from './ForecastDaysList';
 import { ForecastHoursList } from './ForecastHoursList';
 import { ForecastMiniCard } from './ForecastMiniCard';
@@ -34,10 +35,7 @@ export const ForecastView = ({ lang, location }: ForecastViewProps): JSX.Element
       <>
         <TobBar leftIconName="fahrenheit" centerIconName="calendar" centerText="7 Days" />
         <Box flexDirection="row">
-          <ForecastMiniCard bottomText="10:00" topText="24%" iconName="clear-day" />
-          <ForecastMiniCard bottomText="10:00" topText="24%" iconName="clear-night" />
-          <ForecastMiniCard bottomText="10:00" topText="24%" iconName="clear-night" isActive />
-          <ForecastMiniCard bottomText="10:00" topText="24%" iconName="clear-night" />
+          <ForecastDay data={forecastList!} />
         </Box>
         <ForecastValuesLine
           wind={forecastList?.[0].windSpeed}
